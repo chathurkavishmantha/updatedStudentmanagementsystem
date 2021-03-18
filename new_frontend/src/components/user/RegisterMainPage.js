@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import {Link} from 'react-router-dom';
 import MainLogo from '../css/img/stuent_management_main.jpg';
 
-import Registerstudentpage from '../user/RegisterCustomer';
+import Registerstudentpage from '../user/RegisterStudent';
 
 class RegisterMainPage extends Component {
     render() {

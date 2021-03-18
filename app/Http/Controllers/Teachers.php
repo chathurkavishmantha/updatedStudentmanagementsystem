@@ -16,4 +16,6 @@ class Teachers extends Controller
         $teacher = DB::table('users')->where('type', 'teacher')->get(); 
         return $teacher;
     }
+
+    
 }

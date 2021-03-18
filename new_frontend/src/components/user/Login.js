@@ -3,7 +3,7 @@ import {Link} from 'react-router-dom';
 
 import axios from 'axios';
 import cookie from 'js-cookie';
-import Error from '../Error/error';
+import Error from '../user/Error';
 import '../css/custom.css';
 import {FaUserCircle, FaLock, FaExclamationCircle} from 'react';
 import MainLogo from '../css/img/login.gif';
@@ -28,7 +28,7 @@ class Login extends Component {
         .then(res => {
             cookie.set('token', res.data.access_token);
             this.props.setLogin(res.data.user);
-            this.props.history.push('/user_profile');
+            this.props.history.push('/student_profile');
             
         })
         // .catch(e => this.setState({errors: e.response.data.errors}))

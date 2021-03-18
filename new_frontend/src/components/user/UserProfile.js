@@ -331,7 +331,7 @@ class UserProfile extends Component {
 }
 const mapStateToProps = state => {
     return {
-        id:state.auth.user.id,
+        // id:state.auth.user.id,
         
         name:state.auth.user.name,
         email:state.auth.user.email,
@@ -340,7 +340,7 @@ const mapStateToProps = state => {
         
         admition_date:state.auth.user.admition_date,
         gurdian_number:state.auth.user.gurdian_number,
-        city:state.auth.user.	city,
+        city:state.auth.user.city,
         gurdian_name:state.auth.user.gurdian_name,
         father_name:state.auth.user.father_name,
         father_occupation:state.auth.user.father_occupation,

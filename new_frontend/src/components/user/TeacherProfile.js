@@ -22,9 +22,11 @@ class TeacherProfile extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            id:props.id,
             email:props.email,
             name:props.name,
-            teacher_details:[]
+            subject_details:[],
+            module_details:[]
 
            
         }
@@ -33,13 +35,22 @@ class TeacherProfile extends Component {
     componentDidMount() 
     {
 
-        axios.get('http://127.0.0.1:8000/api/teacher_details/')
+        axios.get('http://127.0.0.1:8000/api/subject_details/'+ this.props.id)
         .then(response=>{
             this.setState({
-                teacher_details:response.data
+                subject_details:response.data
                 // console.log(response.data);
             });
         });
+
+        axios.get('http://127.0.0.1:8000/api/module_details/')
+        .then(response=>{
+            this.setState({
+                module_details:response.data
+                // console.log(response.data);
+            });
+        });
+
 
         
     }
@@ -57,6 +68,9 @@ class TeacherProfile extends Component {
 
 
     render(){
+        const {module_details} = this.state;
+
+
         return(
             <div>
                 <main className="main-nopaddingUp">
@@ -328,21 +342,20 @@ class TeacherProfile extends Component {
                                         <table className="table table-hover text-center">
                                             <thead>
                                                 <tr>
-                                                <th scope="col">Teacher Name</th>
+                                                {/* <th scope="col">Teacher Name</th> */}
                                                 <th scope="col">Subject</th>
                                                 <th scope="col">Subject Code</th>
-                                                <th scope="col">Phone number</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                             {
-                                                    this.state.teacher_details.map(teacher=>{
+                                                    this.state.subject_details.map(teacher=>{
                                                         return(
                                                                 <tr>
-                                                                    <th scope="col">{teacher.name}</th>
-                                                                    <th scope="col">{teacher.city}</th>
-                                                                    <th scope="col">{teacher.gender}</th>
-                                                                    <th scope="col">{teacher.gurdian_number}</th>
+                                                                    <th scope="col">{teacher.subject_name}</th>
+                                                                    <th scope="col">{teacher.subject_code}</th>
+                                                                    {/* <th scope="col">{teacher.gender}</th>
+                                                                    <th scope="col">{teacher.gurdian_number}</th> */}
                                                                 </tr>
                                                             )
                                                     })
@@ -362,7 +375,7 @@ class TeacherProfile extends Component {
                                     <div className="d-flex justify-content-left">
                                         <Link className="btn btn-lg btn-outline-success" to="/add_lecture_matireal"><FaPlus/> Add new Lecture Material</Link>
                                     </div><br/>
-                                    <Link className="btn btn-lg btn-outline-success" to="/add_lecture_matireal"><FaPlus/> Register For New Subject</Link>
+                                    <Link className="btn btn-lg btn-outline-success" to="/register_new_subject"><FaPlus/> Register For New Subject</Link>
                                     
                                     <hr/>
 
@@ -382,101 +395,49 @@ class TeacherProfile extends Component {
 
 
                                                     <div className="row text-center">
-                                                    {/* {
-                                                        architect
-                                                            .map( archi =>  */}
-                                                        
-    
-                                                                <div className="user_card" >
-                                                                    <div className="user_card-header">
-                                                                        <div className="animated_wave-bg">
-                                                                            <div className="animated_wave-01"></div>
-                                                                            <div className="animated_wave-02"></div>
-                                                                            <div className="animated_wave-03"></div>
-                                                                        </div>
-                                                
-                                                                        <div className="user_profile_pic-content">
-                                                                            <img className="user_profile_pic" src={Teachers} alt=""/>
-                                                                        </div>
-                                                                    </div>
-                                                
-                                                                    <div className="user_card-content">
-                                                                        <div className="user_name">
-                                                                            <h4>Module Number : 01 </h4>
-                                                                            <h4>Module Name: Java :</h4>
-                                                                            <h4>Description : oop</h4>
-                                                                            <h4>Date : 2012/1/1</h4>
-                                                                            
-                                                                        </div>
-                                                                        <a href="/#" className="btn btn-warning">View</a><br/>
-                                                                        <a href="/#" className="btn btn-success">Download</a>
-                                                                        {/* <Link to={'/arc_prductdetails'} className="btn btn-success">View</Link> */}
-                                                                        {/* <Link to={`/arc_prductdetails/ `} className="btn btn-success">View</Link> */}
-                                                                    </div>
-                                                                </div>
-
-                                                                <div className="user_card" >
-                                                                    <div className="user_card-header">
-                                                                        <div className="animated_wave-bg">
-                                                                            <div className="animated_wave-01"></div>
-                                                                            <div className="animated_wave-02"></div>
-                                                                            <div className="animated_wave-03"></div>
-                                                                        </div>
-                                                
-                                                                        <div className="user_profile_pic-content">
-                                                                            <img className="user_profile_pic" src={Teachers} alt=""/>
-                                                                        </div>
-                                                                    </div>
-                                                
-                                                                    <div className="user_card-content">
-                                                                        <div className="user_name">
-                                                                            <h4>Lecture Slide : 01 </h4>
-                                                                            <h4>Module name: Java :</h4>
-                                                                            <h4>About : oop</h4>
-                                                                            <h4>Date : 2012/1/1</h4>
-                                                                            
-                                                                        </div>
-                                                                        <a href="/#" className="btn btn-warning">View</a><br/>
-                                                                        <a href="/#" className="btn btn-success">Download</a>
-                                                                        {/* <Link to={'/arc_prductdetails'} className="btn btn-success">View</Link> */}
-                                                                        {/* <Link to={`/arc_prductdetails/ `} className="btn btn-success">View</Link> */}
-                                                                    </div>
-                                                                </div>
-
-                                                                <div className="user_card" >
-                                                                    <div className="user_card-header">
-                                                                        <div className="animated_wave-bg">
-                                                                            <div className="animated_wave-01"></div>
-                                                                            <div className="animated_wave-02"></div>
-                                                                            <div className="animated_wave-03"></div>
-                                                                        </div>
-                                                
-                                                                        <div className="user_profile_pic-content">
-                                                                            <img className="user_profile_pic" src={Teachers} alt=""/>
-                                                                        </div>
-                                                                    </div>
-                                                
-                                                                    <div className="user_card-content">
-                                                                        <div className="user_name">
-                                                                            <h4>Lecture Slide : 01 </h4>
-                                                                            <h4>Module name: Java :</h4>
-                                                                            <h4>About : oop</h4>
-                                                                            <h4>Date : 2012/1/1</h4>
-                                                                            
-                                                                        </div>
-                                                                        <a href="/#" className="btn btn-warning">View</a><br/>
-                                                                        <a href="/#" className="btn btn-success">Download</a>
-                                                                    </div>
-                                                                </div>
-
-                                                    </div>
+                                                    {
+                                                    module_details
                                                     
+                                                        .map( module => 
+                                                            <div className="user_card"   key={module.id}>
+                                                                    <div className="user_card-header">
+                                                                        <div className="animated_wave-bg">
+                                                                            <div className="animated_wave-01"></div>
+                                                                            <div className="animated_wave-02"></div>
+                                                                            <div className="animated_wave-03"></div>
+                                                                        </div>
+                                                
+                                                                        <div className="user_profile_pic-content">
+                                                                            <img className="user_profile_pic" src={Teachers} alt=""/>
+                                                                        </div>
+                                                                    </div>
+                                                
+                                                                    <div className="user_card-content">
+                                                                        <div className="user_name">
+                                                                            <h6>Module Name : {module.module_name} </h6>
+                                                                            <h6>Module Number: {module.module_no}</h6>
+                                                                            <h6>Description : {module.module_description}</h6>
+                                                                            <h6>Date : {module.module_upload_date}</h6>
+                                                                            {/* <h6>File : <a>{module.module_upload_file}</a></h6> */}
+                                                                            
+                                                                        </div>
+                                                                        <a href="/#" className="btn btn-warning">View</a><br/>
+                                                                        <a href="/#" className="btn btn-success">Download</a>
+                                                                        {/* <Link to={'/arc_prductdetails'} className="btn btn-success">View</Link> */}
+                                                                        {/* <Link to={`/arc_prductdetails/ `} className="btn btn-success">View</Link> */}
+                                                                    </div>
+                                                                </div>
 
+                                                        )
+                                                    
+                                                    }
                                                 </div>
 
-                                                
                                             </div>
+
+                                            
                                         </div>
+                                    </div>
                                     
                                     </div>
                                 </div>

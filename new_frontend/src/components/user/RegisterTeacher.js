@@ -20,52 +20,49 @@ class RegisterTeacher extends Component {
             password_confirmation:"",
             address:"",
             gender:"",
-            admition_date:"",
-            gurdian_number:"",
-            city:"",
-            gurdian_name:"",
-            father_name:"",
-            father_occupation:"",
-            father_nic:"",
-            mother_name:"",
-            mother_occupation:"",
-            mother_nic:"",
+            subject_name:"",
+            subject_code:"",
+            mobile_no:"",
             errors:{}
         }
     }
 
-    // handleForm = (e) => {
-    //     e.preventDefault();
-    //     const data = {
-    //         name:this.state.name, 
-    //         email:this.state.email,
+    handleForm = (e) => {
+        e.preventDefault();
+        const data = {
 
-    //         address:this.state.address,
-    //         type:this.state.type, 
-    //         zip_code:this.state.zip_code,
-    //         mobile_number:this.state.mobile_number,
-    //         password:this.state.password,
-    //         password_confirmation:this.state.password_confirmation 
-    //     }
-    //     axios.post("http://localhost:8000/api/auth/register", data)
-    //     .then(res => {
-    //         cookie.set('token', res.data.access_token);
-    //         // cookie.set('user', res.data.user);
-    //         this.props.setLogin(res.data.user);
-    //         this.props.history.push('/CustomerUserProfile');
-    //     })
-    //     .catch(e => this.setState({errors: e.response.data}))
-    //     console.log(data);
+            type:this.state.type, 
+            name:this.state.name, 
+            email:this.state.email,
+            password:this.state.password,
+            password_confirmation:this.state.password_confirmation,             
+            address:this.state.address,            
+            gender:this.state.gender,
+            subject_name:this.state.subject_name,
+            subject_code:this.state.subject_code,
+            mobile_no:this.state.mobile_no
+
+        }
+        axios.post("http://localhost:8000/api/auth/register", data)
+        .then(res => {
+            cookie.set('token', res.data.access_token);
+            // cookie.set('user', res.data.user);
+            // this.props.setLogin(res.data.user);
+            this.props.history.push('/teacher_profile');
+        })
+        // .catch(e => this.setState({errors: e.response.data}))
+        console.log(data);
         
-    // }
+    }
 
-    // handleInput = (e) => {
-    //     e.preventDefault();
-    //     const name = e.target.name;
-    //     const value = e.target.value;
-    //     this.setState({[name]:value})
-    // }
+    handleInput = (e) => {
+        e.preventDefault();
+        const name = e.target.name;
+        const value = e.target.value;
+        this.setState({[name]:value})
+    }
     
+
     render() {
         // const error = this.state.errors
         return (
@@ -90,7 +87,7 @@ class RegisterTeacher extends Component {
                         <div className="form-group col-md-6 profile_inputs">
                                 <select className="custom-select" name="type" id="inputGroupSelect01" onChange={this.handleInput} required>
                                     <option defaultValue>Choose your Role...</option>
-                                    <option value="customer">Teacher</option>
+                                    <option value="teacher">Teacher</option>
                               
                                 </select>
                             </div>
@@ -127,7 +124,7 @@ class RegisterTeacher extends Component {
                         <hr/>
                         <h4>Accedamic Info</h4>
                         <div className="form-group profile_inputs">
-                            <input name="subject" type="text" className="form-control" id="" placeholder="Type your Subject Name here...." onChange={this.handleInput} required/>
+                            <input name="subject_name" type="text" className="form-control" id="" placeholder="Type your Subject Name here...." onChange={this.handleInput} required/>
                         </div>
                         <div className="form-row">
                             <div className="form-group col-md-6 profile_inputs">
@@ -136,7 +133,7 @@ class RegisterTeacher extends Component {
                         </div> 
                         <div className="form-row">
                             <div className="form-group col-md-6 profile_inputs">
-                                <input name="mobile_number" type="text" className="form-control" id="inputPassword" placeholder="Type your Mobile Number here...." onChange={this.handleInput} required/>
+                                <input name="mobile_no" type="text" className="form-control" id="inputPassword" placeholder="Type your Mobile Number here...." onChange={this.handleInput} required/>
                             </div>
                         </div>
                         <div className="text-center">

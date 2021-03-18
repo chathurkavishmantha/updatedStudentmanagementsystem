@@ -94,15 +94,17 @@ class AuthController extends Controller
             'mother_name' => request('mother_name'),
             'mother_occupation' => request('mother_occupation'),
             'mother_nic' => request('mother_nic'),
+            'subject_name'=> request('subject_name'),
+            'subject_code'=> request('subject_code'),
+            'mobile_no'=> request('mobile_no')
 
         ]);
         return $this->login(request());
 
 
-
-
-
     }
+
+    
 
 
     /**

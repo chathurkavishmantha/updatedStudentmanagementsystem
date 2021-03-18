@@ -8,7 +8,7 @@ import { connect } from 'react-redux';
 // import {FaExclamationCircle} from 'react-icons/fa';
 import RegisterLogo from '../css/img/register.gif';
 
-class RegisterCustomer extends Component {
+class RegisterStudent extends Component {
 
     constructor(props) {
         super(props);
@@ -62,8 +62,8 @@ class RegisterCustomer extends Component {
             this.props.setLogin(res.data.user);
             // this.props.history.push('/CustomerUserProfile');
         })
-        .catch(e => this.setState({errors: e.response.data}))
-        console.log(data);
+        // .catch(e => this.setState({errors: e.response.data}));
+        // console.log(data);
         
     }
 
@@ -98,7 +98,7 @@ class RegisterCustomer extends Component {
                         <div className="form-group col-md-6 profile_inputs">
                                 <select className="custom-select" name="type" id="inputGroupSelect01" onChange={this.handleInput} required>
                                     <option defaultValue>Choose your Role...</option>
-                                    <option value="customer">Student</option>
+                                    <option value="student">Student</option>
                               
                                 </select>
                             </div>
@@ -130,7 +130,7 @@ class RegisterCustomer extends Component {
                                 <input name="address" type="text" className="form-control" id="inputPassword" placeholder="Type your Address here...." onChange={this.handleInput} required/>
                             </div>
                             <div className="form-group col-md-6 profile_inputs">
-                                <input name="gender" type="password" className="form-control" id="inputEmail" placeholder="Type Gender here...." onChange={this.handleInput} required/>
+                                <input name="gender" type="text" className="form-control" id="inputEmail" placeholder="Type Gender here...." onChange={this.handleInput} required/>
                             </div>
                         </div>
                         <div className="form-row">
@@ -200,5 +200,5 @@ const mapDispatchToProps = dispatch => {
     }
 }
 
-export default connect(null, mapDispatchToProps)(RegisterCustomer)
+export default connect(null, mapDispatchToProps)(RegisterStudent)
 // export default RegisterCustomer

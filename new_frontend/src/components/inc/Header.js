@@ -9,7 +9,7 @@ import {FaBell} from 'react-icons/fa';
 
 //Routes
 import RegisterMainPage from '../user/RegisterMainPage';
-import Registerstudentpage from '../user/RegisterCustomer';
+import Registerstudentpage from '../user/RegisterStudent';
 import RegisterTeacherPage from '../user/RegisterTeacher';
 import Login from '../user/Login';
 import Home from '../pages/Home';
@@ -19,6 +19,7 @@ import AuthRoute from '../user/AuthRoute';
 import TeacherProfile from '../user/TeacherProfile';
 import AddLectureMatireal from '../pages/AddLectureMatireal';
 import Test from '../pages/Test';
+import RegisterForNewSubject from '../teacher/RegisterForNewSubject';
 
 
 
@@ -96,9 +97,11 @@ function Header(props) {
                                 <Route exact path="/login" component={Login}/>
 
                                 <Route exact path="/" component={Home}/>
-                                <AuthRoute exact path="/user_profile" component={UserProfile}/>
+                                <AuthRoute exact path="/student_profile" component={UserProfile}/>
                                 <AuthRoute exact path="/teacher_profile" component={TeacherProfile}/>
                                 <AuthRoute exact path="/add_lecture_matireal" component={AddLectureMatireal}/>
+
+                                <AuthRoute exact path="/register_new_subject" component={RegisterForNewSubject}/>
 
 
                                 <AuthRoute exact path="/test" component={Test}/>

@@ -12,14 +12,23 @@ Route::group([
     Route::post('login', 'AuthController@login');
     Route::post('logout', 'AuthController@logout');
     Route::post('register', 'AuthController@register');
-    // Route::post('register', 'AuthController@student_registration');
     Route::post('refresh', 'AuthController@refresh');
     Route::post('me', 'AuthController@me');
 
 });
 
 
-Route::get('/teacher_details', 'Teachers@getTeacherDetails');
+
+// Route::post('/register_teacher', 'Teachers@registerTeacher');addmodule
+
+//module controller routes
+Route::post('/addmodule', 'ModuleController@add_module');
+Route::get('/module_details', 'ModuleController@getModuleDetails');
+
+
+//subject controller routers
+Route::post('/register_subject', 'SubjectController@register_subject');
+Route::get('/subject_details/{id}', 'SubjectController@getSubjectrDetails');
 
 
 

@@ -34,7 +34,10 @@ class User extends Authenticatable implements JWTSubject
             'father_nic',
             'mother_name',
             'mother_occupation',
-            'mother_nic'
+            'mother_nic',
+            'subject_name',
+            'subject_code',
+            'mobile_no'
     ];
 
     /**
