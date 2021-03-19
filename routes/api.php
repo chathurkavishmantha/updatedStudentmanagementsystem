@@ -15,11 +15,9 @@ Route::group([
     Route::post('refresh', 'AuthController@refresh');
     Route::post('me', 'AuthController@me');
 
-});
+}); 
 
 
-
-// Route::post('/register_teacher', 'Teachers@registerTeacher');addmodule
 
 //module controller routes
 Route::post('/addmodule', 'ModuleController@add_module');
@@ -30,6 +28,13 @@ Route::get('/module_details', 'ModuleController@getModuleDetails');
 Route::post('/register_subject', 'SubjectController@register_subject');
 Route::get('/subject_details/{id}', 'SubjectController@getSubjectrDetails');
 
+//notice controller
+
+
+Route::post('/add_notice', 'Teachers@Add_notice');
+Route::get('/notice_details/{id}', 'Teachers@get_notice');
+Route::get('/all_notice_details', 'Teachers@get_all_notice');
+Route::get('/all_subject_details', 'Teachers@get_all_subject');
 
 
 

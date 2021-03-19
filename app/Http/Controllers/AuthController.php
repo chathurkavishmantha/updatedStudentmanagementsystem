@@ -84,6 +84,7 @@ class AuthController extends Controller
             'password_confirmation' => request('password_confirmation'),
             'address' => request('address'),
             'gender' => request('gender'),
+            'reg_no' => request('reg_no'),
             'admition_date' => request('admition_date'),
             'gurdian_number' => request('gurdian_number'),
             'city' => request('city'),
@@ -94,8 +95,6 @@ class AuthController extends Controller
             'mother_name' => request('mother_name'),
             'mother_occupation' => request('mother_occupation'),
             'mother_nic' => request('mother_nic'),
-            'subject_name'=> request('subject_name'),
-            'subject_code'=> request('subject_code'),
             'mobile_no'=> request('mobile_no')
 
         ]);

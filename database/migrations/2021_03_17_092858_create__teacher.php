@@ -19,6 +19,7 @@ class CreateTeacher extends Migration
         });
     }
 
+
     /**
      * Reverse the migrations.
      *

@@ -21,6 +21,7 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->string('address');
             $table->string('gender');
+            $table->string('reg_no')->nullable();
             $table->string('admition_date')->nullable();
             $table->string('gurdian_number')->nullable();
             $table->string('city')->nullable();
@@ -31,8 +32,6 @@ class CreateUsersTable extends Migration
             $table->string('mother_name')->nullable();
             $table->string('mother_occupation')->nullable();
             $table->string('mother_nic')->nullable();
-            $table->string('subject_name')->nullable();
-            $table->string('subject_code')->nullable();
             $table->string('mobile_no')->nullable();
             
             $table->rememberToken();

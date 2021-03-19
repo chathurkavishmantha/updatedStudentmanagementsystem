@@ -20,6 +20,7 @@ import TeacherProfile from '../user/TeacherProfile';
 import AddLectureMatireal from '../pages/AddLectureMatireal';
 import Test from '../pages/Test';
 import RegisterForNewSubject from '../teacher/RegisterForNewSubject';
+import AddNotices from '../teacher/AddNotices';
 
 
 
@@ -102,6 +103,7 @@ function Header(props) {
                                 <AuthRoute exact path="/add_lecture_matireal" component={AddLectureMatireal}/>
 
                                 <AuthRoute exact path="/register_new_subject" component={RegisterForNewSubject}/>
+                                <AuthRoute exact path="/add_notice" component={AddNotices}/>
 
 
                                 <AuthRoute exact path="/test" component={Test}/>

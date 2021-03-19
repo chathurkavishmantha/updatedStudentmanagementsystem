@@ -7,17 +7,17 @@ import cookie from 'js-cookie';
 import {connect} from 'react-redux';
 
 
- class RegisterForNewSubject extends Component {
+ class AddNotices extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
             // subject_id:'',
             id:props.id,
-            name:props.name,
             subject_name:'',
-            subject_code:''
-            
+            notice_date:'',
+            study_year:'',
+            about_notice:''
             
 
         }
@@ -29,13 +29,14 @@ import {connect} from 'react-redux';
         const data = {
             // id:this.state.id,
             user_id:this.state.id,
-            user_name:this.state.name,
             subject_name:this.state.subject_name,
-            subject_code:this.state.subject_code
+            notice_date:this.state.notice_date,
+            study_year:this.state.study_year,
+            about_notice:this.state.about_notice
         }
         console.log(data);
 
-        axios.post("http://localhost:8000/api/register_subject", data)
+        axios.post("http://localhost:8000/api/add_notice", data)
         .then(res => {
             console.log(res.data);
             this.props.history.push('/teacher_profile');
@@ -64,7 +65,7 @@ import {connect} from 'react-redux';
                     <div className="text-center">
                         <div className="text-center jumbotron jumbotron-fluid">
                         <form className="text-center" method="POST" onSubmit={this.handleForm}>
-                                    <h4><h1>Register For New Subject </h1><br/>
+                                    <h4><h1>Add Notice</h1><br/>
                                     </h4>
                                     <div className="form-row d-flex justify-content-center">
                                         <div className="col-md-3 mb-3">
@@ -74,13 +75,20 @@ import {connect} from 'react-redux';
                                             <input type="text" className="form-control" id="validationServer01" name="subject_name" onChange={this.handleInput} required />
                                         </div>
                                         <div className="col-md-3 mb-3">
-                                            <label htmlFor="validationServer01">Subject Code:</label>
-                                            <input type="text" className="form-control" id="validationServer01" name="subject_code" onChange={this.handleInput} required />
+                                            <label htmlFor="validationServer01">Notice Date:</label>
+                                            <input type="text" className="form-control" id="validationServer01" name="notice_date" onChange={this.handleInput} required />
+                                        </div>
+                                        <div className="col-md-3 mb-3">
+                                            <label htmlFor="validationServer01">About the notices:</label>
+                                            <input type="text" className="form-control" id="validationServer01" name="about_notice" onChange={this.handleInput} required />
                                         </div>   
-                                        
+                                        <div className="col-md-3 mb-3">
+                                            <label htmlFor="validationServer01">Add relavent Year :</label>
+                                            <input type="text" className="form-control" id="validationServer01" name="study_year" onChange={this.handleInput} required />
+                                        </div> 
+                                            {/* <label htmlFor="validationServer01">id:</label> */}
                                             <input type="hidden" className="form-control" id="validationServer01" name="user_id" onChange={this.handleInput} value={this.state.id} required />
-                                            <input type="hidden" className="form-control" id="validationServer01" name="user_name" onChange={this.handleInput} value={this.state.name} required />
-                                                                           
+                                                                       
                                         
                                     </div>
                                     
@@ -112,9 +120,8 @@ import {connect} from 'react-redux';
 const mapStateToProps = state => {
     return {
         id:state.auth.user.id,
-        name:state.auth.user.name,
         
     };
 }
 
-export default connect(mapStateToProps, null)(RegisterForNewSubject);
+export default connect(mapStateToProps, null)(AddNotices);

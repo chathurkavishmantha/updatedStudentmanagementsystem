@@ -20,8 +20,6 @@ class RegisterTeacher extends Component {
             password_confirmation:"",
             address:"",
             gender:"",
-            subject_name:"",
-            subject_code:"",
             mobile_no:"",
             errors:{}
         }
@@ -38,8 +36,6 @@ class RegisterTeacher extends Component {
             password_confirmation:this.state.password_confirmation,             
             address:this.state.address,            
             gender:this.state.gender,
-            subject_name:this.state.subject_name,
-            subject_code:this.state.subject_code,
             mobile_no:this.state.mobile_no
 
         }
@@ -114,28 +110,18 @@ class RegisterTeacher extends Component {
                         </div>
                         <div className="form-row">
                             <div className="form-group col-md-6 profile_inputs">
+                                <input name="mobile_no" type="text" className="form-control" id="inputPassword" placeholder="Type your Mobile Number here...." onChange={this.handleInput} required/>
+                            </div>
+                        </div>
+                        <div className="form-row">
+                            <div className="form-group col-md-6 profile_inputs">
                                 <input name="password" type="password" className="form-control" id="" placeholder="Type your password here...." onChange={this.handleInput} required/>
                             </div>
                             <div className="form-group col-md-6 profile_inputs">
                                 <input name="password_confirmation" type="password" className="form-control" id="inputEmail" placeholder="Confirm your password here...." onChange={this.handleInput} required/>
                             </div>
                         </div>
-                        <hr/>
-                        <hr/>
-                        <h4>Accedamic Info</h4>
-                        <div className="form-group profile_inputs">
-                            <input name="subject_name" type="text" className="form-control" id="" placeholder="Type your Subject Name here...." onChange={this.handleInput} required/>
-                        </div>
-                        <div className="form-row">
-                            <div className="form-group col-md-6 profile_inputs">
-                                <input name="subject_code" type="text" className="form-control" id="" placeholder="Type your Subject Code  here...." onChange={this.handleInput} required/>
-                            </div>
-                        </div> 
-                        <div className="form-row">
-                            <div className="form-group col-md-6 profile_inputs">
-                                <input name="mobile_no" type="text" className="form-control" id="inputPassword" placeholder="Type your Mobile Number here...." onChange={this.handleInput} required/>
-                            </div>
-                        </div>
+                        
                         <div className="text-center">
                             <button className="btn btn-lg fire_gradient text-white" type="submit">Register</button>
                         </div>

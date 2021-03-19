@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateSubjectTable extends Migration
+class CreateNoticeTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,14 @@ class CreateSubjectTable extends Migration
      */
     public function up()
     {
-        Schema::create('subjects', function (Blueprint $table) {
-            $table->bigIncrements('subject_id');
-            $table->string('user_id');
-            $table->string('user_name');
+        Schema::create('notices', function (Blueprint $table) {
+            $table->bigIncrements('notice_id');
+            $table->string('user_id');  
             $table->string('subject_name');  
-            $table->string('subject_code');
+            $table->string('notice_date');  
+            $table->string('about_notice');  
+            $table->string('study_year');  
             $table->timestamps();
-            // $table->foreign('subject_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 
@@ -31,6 +31,6 @@ class CreateSubjectTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('subject');
+        Schema::dropIfExists('notice');
     }
 }

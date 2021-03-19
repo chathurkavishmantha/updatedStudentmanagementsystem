@@ -30,6 +30,7 @@ class RegisterStudent extends Component {
             mother_name:"",
             mother_occupation:"",
             mother_nic:"",
+            reg_no:"",
             errors:{}
         }
     }
@@ -54,6 +55,7 @@ class RegisterStudent extends Component {
             mother_name:this.state.mother_name,
             mother_occupation:this.state.mother_occupation,
             mother_nic:this.state.mother_nic,
+            reg_no:this.state.reg_no,
         }
         axios.post("http://localhost:8000/api/auth/register", data)
         .then(res => {
@@ -112,6 +114,12 @@ class RegisterStudent extends Component {
                             </div>
                             <div className="form-group col-md-6 profile_inputs">
                                 <input name="email" type="email" className="form-control" id="inputEmail" placeholder="Type your Email here...."  onChange={this.handleInput} required/>
+                            </div>
+                            <br/>
+                        </div>
+                        <div className="form-row">
+                            <div className="form-group col-md-6 profile_inputs">
+                                <input name="reg_no" type="text" className="form-control" id="inputEmail" placeholder="Type your Student Registration Number here...."  onChange={this.handleInput} required/>
                             </div>
                             <br/>
                         </div>

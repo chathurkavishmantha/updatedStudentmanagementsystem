@@ -17,6 +17,21 @@ import prodct1 from '../css/img/arrow-icegif.gif';
 import Teachers from '../css/img/teacher.jpg';
 import prodct3 from '../css/img/prodct/product3.jpg';
 
+
+
+function searchSubjectName(term1){
+    return function(x){
+        return x.subject_name.toLowerCase().includes(term1.toLowerCase()) || !term1;
+    }
+}
+function searchStudyYear(term2){
+    return function(x){
+        return x.study_year.toLowerCase().includes(term2.toLowerCase()) || !term2;
+    }
+}
+
+
+
 class TeacherProfile extends Component {
 
     constructor(props) {
@@ -25,11 +40,25 @@ class TeacherProfile extends Component {
             id:props.id,
             email:props.email,
             name:props.name,
+            mobile_no:props.mobile_no,
             subject_details:[],
-            module_details:[]
+            module_details:[],
+            notice_details:[],
+            term1:'',
+            term2:''
 
-           
         }
+            this.searchHandler1 = this.searchHandler1.bind(this);
+            this.searchHandler2 = this.searchHandler2.bind(this);
+            
+            
+        }
+    
+    searchHandler1(event1){
+        this.setState({term1:event1.target.value })
+    }
+    searchHandler2(event2){
+        this.setState({term2:event2.target.value })
     }
 
     componentDidMount() 
@@ -51,6 +80,15 @@ class TeacherProfile extends Component {
             });
         });
 
+        axios.get('http://127.0.0.1:8000/api/notice_details/'+ this.props.id)
+        .then(response=>{
+            this.setState({
+                notice_details:response.data
+            });
+        });
+
+        
+
 
         
     }
@@ -68,7 +106,9 @@ class TeacherProfile extends Component {
 
 
     render(){
-        const {module_details} = this.state;
+        const {module_details,notice_details,term1,term2 } = this.state;
+        // const {term ,term2,term3,term4,term5,term6,term7,term8,term10, architect, Recomemed_architect,} = this.state;
+
 
 
         return(
@@ -93,7 +133,7 @@ class TeacherProfile extends Component {
                                     </li>
                                     <li className="nav-item butn_styles">
                                         {/* <a className="nav-link text-white" id="v-pills-subject" data-toggle="pill" href="#v-pills-subject" role="tab" aria-controls="v-pills-subjects" aria-selected="true">Subjects</a> */}
-                                        <a className="nav-link text-white" id="v-pills-completed-projects-tab" data-toggle="pill" href="#v-pills-completed-projects" role="tab" aria-controls="v-pills-projects" aria-selected="true">Modules</a>
+                                        <a className="nav-link text-white" id="v-pills-completed-projects-tab" data-toggle="pill" href="#v-pills-completed-projects" role="tab" aria-controls="v-pills-projects" aria-selected="true">Academic Works</a>
                                     </li>
                                 </ul>
                             </div>
@@ -105,128 +145,92 @@ class TeacherProfile extends Component {
                                 <div className="tab-pane fade show active" id="v-pills-dashboard" role="tabpanel" aria-labelledby="v-pills-dashboard-tab">
                                     <h2><br/> <h5 className="alert alert-danger  d-flex justify-content-center fade-in ">&nbsp;Wellcome {this.props.name}</h5></h2>
                                     <hr className="shadow-lg" />
-                                    <h2>Notices</h2>
 
-                                    <div className="container">
-                                        <div className="row">
-                                            
-                                            <div className="text-center jumbotron jumbotron">
-
-                                            <h2>Main Notices</h2>
-
-                                            <div className="row">
-                                                <div class="col-4">
-                                                    <div className="sp-wrap">
-                                                        <a href=""><img className="carousel-img5" src={prodct1} alt="" /></a>
-                                                        <div>
-                                                            A paragraph is a series of related sentences developing a central idea, called the topic. Try to think about paragraphs in terms of thematic unity: a paragraph is a sentence or a group of sentences that supports one central, unified idea. Paragraphs add one idea at a time to your broader argument.
+                                    <div id="search" className="tab-pane ">
+                                        <div className=" text-center">
+                                            <br/> <h4>Search Notices</h4>
+                                            <hr/>
+                                            <div className="container form-group">
+                                                <form>
+                                                    <div className="row">
+                                                        <div className=" col-md-6 mb-3 search_filter_inputs">
+                                                            <select className="custom-select" name="subject_name" id="" onChange={this.searchHandler1} value={term1} required>
+                                                                    <option defaultValue>Subject....</option>
+                                                                    <option value="network">Network</option>
+                                                                    <option value="database">Database</option>
+                                                                    <option value="datastructure">DataStructure</option>
+                                                                    <option value="programing">Programing</option>
+                                                                    <option value="cybersecurity">Cyber Security</option>
+                                                            </select>
                                                         </div>
+                                                        <div className=" col-md-6 mb-3 search_filter_inputs">
+                                                            <select className="custom-select" name="study_year" id="" onChange={this.searchHandler2} value={term2} required>
+                                                                    <option defaultValue>Year....</option>
+                                                                    <option value="1">1</option>
+                                                                    <option value="2">2</option>
+                                                                    <option value="3">3</option>
+                                                                    <option value="4">4</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                            <hr/>
+                                            
+                                            <h2>Notices</h2>
+                                   
+
+                                            <div className="container">
+                                            
+                                                    <div className="text-center jumbotron jumbotron">
+
+                                                        <h1>Main Notices</h1><br/>
+                                                        {
+                                                            notice_details
+                                                            .filter(searchSubjectName(term1))
+                                                            .filter(searchStudyYear(term2))
+                                                                .map( notice => 
+
+                                                                        <div className="row">
+                                                                            <div class="col-sm">
+                                                                                <div className="sp-wrap" key={notice.notice_id}>
+                                                                                    <a href=""><img className="carousel-img5" src={prodct1} alt="" /></a>
+                                                                                    <div>
+                                                                                        <h4>{notice.subject_name}</h4>
+                                                                                        <h5>{notice.notice_date}</h5>
+                                                                                        <p>{notice.about_notice}</p>
+                                                                                        <p>{notice.study_year}</p>
+                                                                                    </div>
+                                                                                    
+                                                                                </div>
+                                                                                <br/>                                                                    
+                                                                                
+                                                                            </div>                                                                   
+                                                                            
+                                                                        </div>
+                                                                )
+                                                
+                                                                }
                                                         
                                                     </div>
-                                                    <br/>
-                                                    
-                                                    
-                                                </div>
-                                                <div class="col-4">
-                                                    <div className="sp-wrap">
-                                                        <a href=""><img className="carousel-img5" src={prodct1} alt="" /></a>
-                                                        <div>
-                                                            A paragraph is a series of related sentences developing a central idea, called the topic. Try to think about paragraphs in terms of thematic unity: a paragraph is a sentence or a group of sentences that supports one central, unified idea. Paragraphs add one idea at a time to your broader argument.
-                                                        </div>
-                                                    </div>
-                                                    <br/>
-                                                    
-                                                    
-                                                </div>
-
-                                                <div class="col-4">
-                                                    <div className="sp-wrap">
-                                                        <a href=""><img className="carousel-img5" src={prodct1} alt="" /></a>
-                                                        <div>
-                                                            A paragraph is a series of related sentences developing a central idea, called the topic. Try to think about paragraphs in terms of thematic unity: a paragraph is a sentence or a group of sentences that supports one central, unified idea. Paragraphs add one idea at a time to your broader argument.
-                                                        </div>
-                                                    </div>
-                                                    <br/>
-                                                    
-                                                    
                                                 </div>
                                                 
                                             </div>
-                                            
-
-
-                                                <div className="row text-center">
-                                                {/* {
-                                                    architect
-                                                    // .filter(searchForSqvalue(term))
-                                                    // .filter(searchForattachbathroom(term2))
-                                                    // .filter(searchForgarage(term3))
-                                                    // .filter(searchForKitchen(term4))
-                                                        .map( archi =>  */}
-                                                    
-{/* 
-                                                        )
-                                                    
-                                                } */}
-                                                </div>
-
-                                            </div>
-
-                                            
-                                        </div>
-                                        </div>
-
-                                    <div className="row">
-                                        <div className="col-4">
-                                            <div className="dashboard_item_1 text-right text-white">
-                                                <div className="inner_box_adjust_1">
-                                                    <div>
-                                                        <h4>1</h4>
-                                                    </div>
-                                                    <div>
-                                                        <FaUser className="fontAwesome_icon_size"/>
-                                                        <h5>Teachers</h5>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className="col-4">
-                                            <div className="dashboard_item_2 text-right text-white">
-                                                <div className="inner_box_adjust_2">
-                                                    <div>
-                                                        {/* <h4>{this.state.userBelongConstructionsCount}</h4> */}
-                                                    </div>
-                                                    <div>
-                                                        <FaTasks className="fontAwesome_icon_size"/>
-                                                        <h5>none</h5>
-                                                    </div>
-                                                    
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className="col-4">
-                                            <div className="dashboard_item_3 text-right text-white">
-                                                <div className="inner_box_adjust_3">
-                                                        <div>
-                                                            {/* <h4 className="text-right">{this.state.userBelongReviewsCount}</h4> */}
-                                                        </div>
-                                                        <div>
-                                                            <FaStar className="fontAwesome_icon_size"/>
-                                                            <h5>none</h5>
-                                                        </div>
-                
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    
-                                    <br/>
+                                            <hr/>
+                                        </div><br/>
                                     
                                     <hr/>
                                     
                                 </div>
+                                           
+
+
+
+                                    
+                                    
+                                    
                                 <div className="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
-                                    <h2><img className="dashboard_logo_image" src={DashboardLogo} alt="" /> Profile</h2>
+                                    <h2><img className="dashboard_logo_image" src={Teachers} alt="" /> Profile</h2>
                                     <hr/>
                                     <div className="row">
                                         <div className="col-lg-6 order-md-1">
@@ -247,65 +251,19 @@ class TeacherProfile extends Component {
                                                 <div className="form-row">
                                                     <div className="fform-group col-md-6 profile_inputs">
                                                         <label htmlFor="inputAddress">Address :</label>
-                                                        <input type="text" className="form-control" id="inputAddress"  name="address" onChange={this.handleInput} value={this.props.address} placeholder="Address" />
+                                                        <input type="text" className="form-control" id="inputAddress"  name="address" onChange={this.handleInput} value={this.props.address}  />
                                                     </div>
                                                     <div className="form-group col-md-6 profile_inputs">
                                                         <label htmlFor="inputAddress">Gender :</label>
-                                                        <input type="text" className="form-control" id="inputAddress"  name="gender" onChange={this.handleInput} value={this.props.gender} placeholder="Address" />
+                                                        <input type="text" className="form-control" id="inputAddress"  name="gender" onChange={this.handleInput} value={this.props.gender} />
                                                     </div>
                                                 </div>
-                                                    <div className="form-row">
-                                                        <div className="form-group col-md-6 profile_inputs">
-                                                            <label htmlFor="inputName">Admition Date :</label>
-                                                            <input type="text" className="form-control" id="inputPassword" name="admition_date" onChange={this.handleInput} value={this.props.admition_date} />
-                                                        </div>
-                                                        <div className="form-group col-md-6 profile_inputs">
-                                                            <label htmlFor="inputEmail">Gurdian Number :</label>
-                                                            <input type="text" className="form-control" id="inputPassword" name="gurdian_number" onChange={this.handleInput} value={this.props.gurdian_number} />
-                                                            
-                                                        </div>
+                                                <div className="form-row">
+                                                    <div className="fform-group col-md-6 profile_inputs">
+                                                        <label htmlFor="inputAddress">Mobile Number :</label>
+                                                        <input type="text" className="form-control" id="inputAddress"  name="" onChange={this.handleInput} value={this.props.mobile_no}  />
                                                     </div>
-                                                    <div className="form-row">
-                                                        <div className="fform-group col-md-6 profile_inputs">
-                                                            <label htmlFor="inputAddress">City :</label>
-                                                            <input type="text" className="form-control"   name="" onChange={this.handleInput} value={this.props.city}  />
-                                                        </div>
-                                                        <div className="form-group col-md-6 profile_inputs">
-                                                            <label htmlFor="inputAddress">Gurdian Name :</label>
-                                                            <input type="text" className="form-control"  name="" onChange={this.handleInput} value={this.props.gurdian_name}/>
-                                                        </div>
-                                                    </div>
-                                                    <div className="form-row">
-                                                        <div className="fform-group col-md-6 profile_inputs">
-                                                            <label htmlFor="inputAddress">Father Name :</label>
-                                                            <input type="text" className="form-control"   name="" onChange={this.handleInput} value={this.props.father_name}  />
-                                                        </div>
-                                                        <div className="form-group col-md-6 profile_inputs">
-                                                            <label htmlFor="inputAddress">Father Occupation :</label>
-                                                            <input type="text" className="form-control"  name="" onChange={this.handleInput} value={this.props.father_occupation}/>
-                                                        </div>
-                                                        <div className="fform-group col-md-6 profile_inputs">
-                                                            <label htmlFor="inputAddress">Father Nic :</label>
-                                                            <input type="text" className="form-control"   name="" onChange={this.handleInput} value={this.props.father_nic}  />
-                                                        </div>
-                                                    </div>
-                                                    <div className="form-row">
-                                                        <div className="fform-group col-md-6 profile_inputs">
-                                                            <label htmlFor="inputAddress">Mother Name :</label>
-                                                            <input type="text" className="form-control"   name="" onChange={this.handleInput} value={this.props.mother_name}  />
-                                                        </div>
-                                                        <div className="form-group col-md-6 profile_inputs">
-                                                            <label htmlFor="inputAddress">Mother Occupation :</label>
-                                                            <input type="text" className="form-control"  name="" onChange={this.handleInput} value={this.props.mother_occupation}/>
-                                                        </div>
-                                                        <div className="fform-group col-md-6 profile_inputs">
-                                                            <label htmlFor="inputAddress">Mother Nic :</label>
-                                                            <input type="text" className="form-control"   name="" onChange={this.handleInput} value={this.props.mother_nic}  />
-                                                        </div>
-                                                    </div>
-                                                    {/* <div className="text-center">
-                                                        <button className="btn btn-default fire_gradient buttn_submit" type="submit">Update Info</button>
-                                                    </div> */}
+                                                </div>
                                                 </form>
                                             </div>
                                             <div className="col-md-6 order-md-"> 
@@ -373,9 +331,16 @@ class TeacherProfile extends Component {
                                     <h2><img className="dashboard_logo_image" src={Teachers} alt="" /> Subjects</h2>
                                     <hr/>
                                     <div className="d-flex justify-content-left">
-                                        <Link className="btn btn-lg btn-outline-success" to="/add_lecture_matireal"><FaPlus/> Add new Lecture Material</Link>
+                                        <Link className="btn btn-lg btn-outline-success" to="/add_lecture_matireal"><FaPlus/> Add new Subject Module</Link>
                                     </div><br/>
-                                    <Link className="btn btn-lg btn-outline-success" to="/register_new_subject"><FaPlus/> Register For New Subject</Link>
+                                    <div className="d-flex justify-content-left">
+                                        <Link className="btn btn-lg btn-outline-success" to="/register_new_subject"><FaPlus/> Register For New Subject</Link>
+
+                                    </div><br/>
+                                    <div className="d-flex justify-content-left">
+                                        <Link className="btn btn-lg btn-outline-success" to="/add_notice"><FaPlus/> Add Notice</Link>
+
+                                    </div>
                                     
                                     <hr/>
 
@@ -459,23 +424,12 @@ class TeacherProfile extends Component {
 }
 const mapStateToProps = state => {
     return {
-        id:state.auth.user.id,
-        
+        id:state.auth.user.id,        
         name:state.auth.user.name,
         email:state.auth.user.email,
         address:state.auth.user.address,
-        gender:state.auth.user.gender,
-        
-        admition_date:state.auth.user.admition_date,
-        gurdian_number:state.auth.user.gurdian_number,
-        city:state.auth.user.	city,
-        gurdian_name:state.auth.user.gurdian_name,
-        father_name:state.auth.user.father_name,
-        father_occupation:state.auth.user.father_occupation,
-        father_nic:state.auth.user.father_nic,
-        mother_name:state.auth.user.mother_name,
-        mother_occupation:state.auth.user.mother_occupation,
-        mother_nic:state.auth.user.mother_nic
+        gender:state.auth.user.gender,        
+        mobile_no:state.auth.user.mobile_no,
 
         
 

@@ -25,6 +25,7 @@ class User extends Authenticatable implements JWTSubject
             'password',
             'address',
             'gender',
+            'reg_no',
             'admition_date',
             'gurdian_number',
             'city',
@@ -35,8 +36,6 @@ class User extends Authenticatable implements JWTSubject
             'mother_name',
             'mother_occupation',
             'mother_nic',
-            'subject_name',
-            'subject_code',
             'mobile_no'
     ];
 

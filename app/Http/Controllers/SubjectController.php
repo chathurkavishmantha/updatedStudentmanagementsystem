@@ -13,7 +13,8 @@ class SubjectController extends Controller
     {
         
         $value = Subject::create([
-            'subject_id' => request('subject_id'),
+            'user_id' => request('user_id'),
+            'user_name' => request('user_name'),
             'subject_name' => request('subject_name'),
             'subject_code' => request('subject_code'),
 
@@ -22,9 +23,11 @@ class SubjectController extends Controller
 
     public function getSubjectrDetails($id)
     {
-        $architects = DB::table('subjects')->where('subject_id', $id)->get(); 
+        $architects = DB::table('subjects')->where('user_id', $id)->get(); 
         return $architects;
     }
+
+    
 
     
 
