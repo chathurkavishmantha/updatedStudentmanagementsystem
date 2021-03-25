@@ -21,6 +21,9 @@ import AddLectureMatireal from '../pages/AddLectureMatireal';
 import Test from '../pages/Test';
 import RegisterForNewSubject from '../teacher/RegisterForNewSubject';
 import AddNotices from '../teacher/AddNotices';
+import AddClassSchedul from '../teacher/AddClassSchedul';
+import UpdateLectureMatireal from '../pages/UpdateLectureMatireal';
+import RegisterNewModule from '../pages/RegisterNewModule';
 
 
 
@@ -104,9 +107,14 @@ function Header(props) {
 
                                 <AuthRoute exact path="/register_new_subject" component={RegisterForNewSubject}/>
                                 <AuthRoute exact path="/add_notice" component={AddNotices}/>
+                                <AuthRoute exact path="/add_class_schedul" component={AddClassSchedul}/>
+                                <AuthRoute exact path="/update_subject/edit/:id" component={UpdateLectureMatireal}/>
+                                <AuthRoute exact path="/student_register_module/" component={RegisterNewModule}/>
+
 
 
                                 <AuthRoute exact path="/test" component={Test}/>
+
 
 
                                     

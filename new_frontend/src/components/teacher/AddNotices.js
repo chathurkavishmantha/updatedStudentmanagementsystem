@@ -76,7 +76,7 @@ import {connect} from 'react-redux';
                                         </div>
                                         <div className="col-md-3 mb-3">
                                             <label htmlFor="validationServer01">Notice Date:</label>
-                                            <input type="text" className="form-control" id="validationServer01" name="notice_date" onChange={this.handleInput} required />
+                                            <input type="date" className="form-control" id="validationServer01" name="notice_date" onChange={this.handleInput} required />
                                         </div>
                                         <div className="col-md-3 mb-3">
                                             <label htmlFor="validationServer01">About the notices:</label>

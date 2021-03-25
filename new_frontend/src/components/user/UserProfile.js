@@ -56,6 +56,8 @@ class UserProfile extends Component {
             notice_details:[],
             term1:'',
             term2:'',
+            schedul_details:[],
+            module_details:[]
 
 
         }
@@ -97,6 +99,21 @@ class UserProfile extends Component {
             });
         });
 
+        axios.get('http://127.0.0.1:8000/api/schedule_class_detailsforstudents/')
+        .then(response=>{
+            this.setState({
+                schedul_details:response.data
+            });
+        });
+
+        axios.get('http://127.0.0.1:8000/api/register_student_module_details/' + this.props.id)
+        .then(response=>{
+            this.setState({
+                module_details:response.data
+                // console.log(response.data);
+            });
+        });
+
         
     }
 
@@ -108,13 +125,21 @@ class UserProfile extends Component {
     }
 
     
-
+    // registerModuleDetails = (e) => {
+    //     e.preventDefault()
+    //     this.props.history.push({
+    //       pathname: '/student_register_module',
+    //       state: {
+    //         Data: this.state.teacher_details,
+    //       }
+    //     });
+    //   }
 
 
 
     render(){
 
-        const {teacher_details,notice_details,term1,term2 } = this.state;
+        const {teacher_details,notice_details,term1,term2,schedul_details,module_details } = this.state;
 
         return(
             <div>
@@ -134,10 +159,13 @@ class UserProfile extends Component {
                                         <a className="nav-link text-white" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="true">Profile</a>
                                     </li>
                                     <li className="nav-item butn_styles">
-                                        <a className="nav-link text-white" id="v-pills-construction-tab" data-toggle="pill" href="#v-pills-construction" role="tab" aria-controls="v-pills-construction" aria-selected="true">Teachers</a>
+                                        <a className="nav-link text-white" id="v-pills-construction-tab" data-toggle="pill" href="#v-pills-construction" role="tab" aria-controls="v-pills-construction" aria-selected="true">Teachers And Subjects</a>
                                     </li>
                                     <li className="nav-item butn_styles">
-                                        <a className="nav-link text-white" id="v-pills-completed-projects-tab" data-toggle="pill" href="#v-pills-completed-projects" role="tab" aria-controls="v-pills-projects" aria-selected="true">none</a>
+                                        <a className="nav-link text-white" id="v-pills-completed-projects-tab" data-toggle="pill" href="#v-pills-completed-projects" role="tab" aria-controls="v-pills-projects" aria-selected="true">Class Schedules</a>
+                                    </li>
+                                    <li className="nav-item butn_styles">
+                                        <a className="nav-link text-white" id="v-pills-completed-register_Module-tab" data-toggle="pill" href="#v-pills-completed-register_Module" role="tab" aria-controls="v-pills-register_Module" aria-selected="true">Manage Modules</a>
                                     </li>
                                 </ul>
                             </div>
@@ -333,17 +361,18 @@ class UserProfile extends Component {
                                     
                                     
                                     {/* <div className="tab-pane fade" id="v-pills-completed-projects" role="tabpanel" aria-labelledby="v-pills-completed-projects-tab"> */}
-                                    <h2><img className="dashboard_logo_image" src={Teachers} alt="" /> Teachers</h2>
+                                    <h2><img className="dashboard_logo_image" src={Teachers} alt="" /> Teachers And Subjects</h2>
                                     <hr/>
                                     <div>
                                         {/* <Link className="btn btn-lg btn-outline-success" to="/#"><FaPlus/> Add a project</Link> */}
                                     </div>
                                     <br/>
                                     <div>
-                                        <table className="table table-hover text-center">
-                                            <thead>
+                                        <table className="table">
+                                            <thead className="thead-dark">
                                                 <tr>
                                                 {/* <th scope="col">Teacher Name</th> */}
+                                                <th scope="col">Teacher Name</th>
                                                 <th scope="col">Subject</th>
                                                 <th scope="col">Subject Code</th>
                                                 </tr>
@@ -353,8 +382,10 @@ class UserProfile extends Component {
                                                     this.state.teacher_details.map(teacher=>{
                                                         return(
                                                                 <tr>
+                                                                    <th scope="col">{teacher.user_name}</th>
                                                                     <th scope="col">{teacher.subject_name}</th>
                                                                     <th scope="col">{teacher.subject_code}</th>
+                                                                    
                                                                 </tr>
                                                             )
                                                     })
@@ -365,6 +396,123 @@ class UserProfile extends Component {
                                 
                                     <div>
                                         
+                                    </div>
+                                </div>
+
+
+                                <div className="tab-pane fade" id="v-pills-completed-projects" role="tabpanel" aria-labelledby="v-pills-completed-projects-tab">
+                                    
+                                    
+                                    {/* <div className="tab-pane fade" id="v-pills-completed-projects" role="tabpanel" aria-labelledby="v-pills-completed-projects-tab"> */}
+                                    <h2><img className="dashboard_logo_image" src={Teachers} alt="" /> Class Schedule</h2>
+                                    <hr/>
+                                    <div>
+                                        {/* <Link className="btn btn-lg btn-outline-success" to="/#"><FaPlus/> Add a project</Link> */}
+                                    </div>
+                                    <br/>
+                                
+                                    <div>
+                                        <table className="table">
+                                            <thead className="thead-dark">
+                                                <tr>
+                                                {/* <th scope="col">Teacher Name</th> */}
+                                                <th scope="col">Subject Code</th>
+                                                <th scope="col">Study Year</th>
+                                                <th scope="col">Class Room</th>
+                                                <th scope="col">Date</th>
+                                                <th scope="col">Time</th>
+                                                <th scope="col">Status</th>
+                                                <th scope="col">Start Date</th>
+                                                <th scope="col">End Date</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            {
+                                                    this.state.schedul_details.map(schedule_class =>{
+                                                        return(
+                                                                <tr>
+                                                                    <th scope="col">{schedule_class.subject_code}</th>
+                                                                    <th scope="col">{schedule_class.study_year}</th>
+                                                                    <th scope="col">{schedule_class.class_room_id}</th>
+                                                                    <th scope="col">{schedule_class.date_id}</th>
+                                                                    <th scope="col">{schedule_class.time_id}</th>
+                                                                    <th scope="col">{schedule_class.status}</th>
+                                                                    <th scope="col">{schedule_class.start_date}</th>
+                                                                    <th scope="col">{schedule_class.end_date}</th>
+                                                                    
+                                                                </tr>
+                                                            )
+                                                    })
+                                                }    
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+
+
+
+                                <div className="tab-pane fade" id="v-pills-completed-register_Module" role="tabpanel" aria-labelledby="v-pills-completed-register_Module-tab">
+                                    
+                                    
+                                    {/* <div className="tab-pane fade" id="v-pills-completed-projects" role="tabpanel" aria-labelledby="v-pills-completed-projects-tab"> */}
+                                    <h2><img className="dashboard_logo_image" src={Teachers} alt="" />Manage Module</h2>
+                                    <hr/>
+                                    <div>
+                                        <Link className="btn btn-lg btn-outline-success" to="/student_profile"><FaPlus/> Register for new module</Link>
+                                        {/* <button className="btn btn-lg btn-outline-success" onClick={this.registerModuleDetails}>Register for new module</button> */}
+                                    </div>
+                                    <br/>
+                                
+                                    <div>
+                                        <div className="container">
+                                            <div className="row">
+                                                
+                                                <div className="text-center jumbotron jumbotron">
+
+
+                                                    <div className="row text-center">
+                                                    {
+                                                    module_details
+                                                    
+                                                        .map( module => 
+                                                            <div className="user_card"   key={module.module_id}>
+                                                                    <div className="user_card-header">
+                                                                        <div className="animated_wave-bg">
+                                                                            <div className="animated_wave-01"></div>
+                                                                            <div className="animated_wave-02"></div>
+                                                                            <div className="animated_wave-03"></div>
+                                                                        </div>
+                                                
+                                                                        <div className="user_profile_pic-content">
+                                                                            <img className="user_profile_pic" src={Teachers} alt=""/>
+                                                                        </div>
+                                                                    </div>
+                                                
+                                                                    <div className="user_card-content">
+                                                                        <div className="user_name">
+                                                                            <h6>Module Name : {module.module_name} </h6>
+                                                                            <h6>Module Number: {module.module_no}</h6>
+                                                                            <h6>Description : {module.module_description}</h6>
+                                                                            <h6>Date : {module.module_upload_date}</h6>
+                                                                            {/* <h6>File : <a>{module.module_upload_file}</a></h6> */}
+                                                                            
+                                                                        </div>
+                                                                        <a href="/#" className="btn btn-success">Download</a>
+
+                                                                        {/* <Link to={`/student_register_module/ `} className="btn btn-success">View</Link> */}
+                                                                    </div>
+                                                                </div>
+
+                                                        )
+                                                    
+                                                    }
+                                                </div>
+
+                                            </div>
+
+                                            
+                                            </div>
+                                        </div>         
                                     </div>
                                 </div>
 

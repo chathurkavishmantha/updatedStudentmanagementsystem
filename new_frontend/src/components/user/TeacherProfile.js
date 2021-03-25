@@ -16,6 +16,9 @@ import Student_logo from '../css/img/student_logo.jpg';
 import prodct1 from '../css/img/arrow-icegif.gif';
 import Teachers from '../css/img/teacher.jpg';
 import prodct3 from '../css/img/prodct/product3.jpg';
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { fab } from '@fortawesome/free-brands-svg-icons'
+import { faCheckSquare, faCoffee } from '@fortawesome/free-solid-svg-icons'
 
 
 
@@ -44,8 +47,11 @@ class TeacherProfile extends Component {
             subject_details:[],
             module_details:[],
             notice_details:[],
+            new_subject_details:[],
+            schedul_details:[],
             term1:'',
-            term2:''
+            term2:'',
+            module_name:''
 
         }
             this.searchHandler1 = this.searchHandler1.bind(this);
@@ -72,7 +78,16 @@ class TeacherProfile extends Component {
             });
         });
 
-        axios.get('http://127.0.0.1:8000/api/module_details/')
+        //take data to update  
+        axios.get('http://127.0.0.1:8000/api/new_subject_details/'+ this.props.match.params.id)
+        .then(response=>{
+            this.setState({
+                new_subject_details:response.data
+            });
+        });      
+
+
+        axios.get('http://127.0.0.1:8000/api/module_details/' + this.props.id)
         .then(response=>{
             this.setState({
                 module_details:response.data
@@ -86,6 +101,17 @@ class TeacherProfile extends Component {
                 notice_details:response.data
             });
         });
+
+        axios.get('http://127.0.0.1:8000/api/schedule_class_details/' + this.props.id)
+        .then(response=>{
+            this.setState({
+                schedul_details:response.data
+            });
+        });
+
+        
+
+        
 
         
 
@@ -101,6 +127,76 @@ class TeacherProfile extends Component {
     }
 
     
+    getDetails = (e) => {
+        e.preventDefault()
+        this.props.history.push({
+          pathname: '/edit_lecture_matireal',
+          state: {
+            Subject: this.state.subject_details,
+          }
+        });
+      }
+    
+
+    onDelete(subject_id){
+        axios.delete('http://127.0.0.1:8000/api/delete_subject/'+ subject_id)
+        .then(response=>{
+            var data = this.state.subject_details;
+
+            for(var i=0; i< data.length; i++){
+                if(data[i].subject_id = subject_id)
+                {
+                    data.splice(i,1);
+                    this.setState({data:data})
+                }
+            }
+        });
+    }
+
+    onDeleteMoudule(module_id){
+        axios.delete('http://127.0.0.1:8000/api/delete_module/'+ module_id)
+        .then(response=>{
+            var data = this.state.module_details;
+
+            for(var i=0; i< data.length; i++){
+                if(data[i].module_id = module_id)
+                {
+                    data.splice(i,1);
+                    this.setState({data:data})
+                }
+            }
+        });
+    }
+
+    onDeleteSchedule(class_schedule_id){
+        axios.delete('http://127.0.0.1:8000/api/delete_shedule/'+ class_schedule_id)
+        .then(response=>{
+            var data = this.state.schedul_details;
+
+            for(var i=0; i< data.length; i++){
+                if(data[i].class_schedule_id = class_schedule_id)
+                {
+                    data.splice(i,1);
+                    this.setState({data:data})
+                }
+            }
+        });
+    }
+
+    onDeleteNotice(notice_id){
+        axios.delete('http://127.0.0.1:8000/api/delete_notice/'+ notice_id)
+        .then(response=>{
+            var data = this.state.notice_details;
+
+            for(var i=0; i< data.length; i++){
+                if(data[i].notice_id = notice_id)
+                {
+                    data.splice(i,1);
+                    this.setState({data:data})
+                }
+            }
+        });
+    }
 
 
 
@@ -129,11 +225,17 @@ class TeacherProfile extends Component {
                                         <a className="nav-link text-white" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="true">Profile</a>
                                     </li>
                                     <li className="nav-item butn_styles">
-                                        <a className="nav-link text-white" id="v-pills-construction-tab" data-toggle="pill" href="#v-pills-construction" role="tab" aria-controls="v-pills-construction" aria-selected="true">Teachers</a>
+                                        <a className="nav-link text-white" id="v-pills-construction-tab" data-toggle="pill" href="#v-pills-construction" role="tab" aria-controls="v-pills-construction" aria-selected="true">Manage Subjects</a>
                                     </li>
                                     <li className="nav-item butn_styles">
                                         {/* <a className="nav-link text-white" id="v-pills-subject" data-toggle="pill" href="#v-pills-subject" role="tab" aria-controls="v-pills-subjects" aria-selected="true">Subjects</a> */}
-                                        <a className="nav-link text-white" id="v-pills-completed-projects-tab" data-toggle="pill" href="#v-pills-completed-projects" role="tab" aria-controls="v-pills-projects" aria-selected="true">Academic Works</a>
+                                        <a className="nav-link text-white" id="v-pills-completed-projects-tab" data-toggle="pill" href="#v-pills-completed-projects" role="tab" aria-controls="v-pills-projects" aria-selected="true">Manage Modules</a>
+                                    </li>
+                                    <li className="nav-item butn_styles">
+                                        <a className="nav-link text-white" id="v-pills-completed-schedule-tab" data-toggle="pill" href="#v-pills-completed-schedule" role="tab" aria-controls="v-pills-module" aria-selected="true">Manage Class Schedules</a>
+                                    </li>
+                                    <li className="nav-item butn_styles">
+                                        <a className="nav-link text-white" id="v-pills-completed-Notices-tab" data-toggle="pill" href="#v-pills-completed-Notices" role="tab" aria-controls="v-pills-Notices" aria-selected="true">Manage Notices</a>
                                     </li>
                                 </ul>
                             </div>
@@ -290,19 +392,27 @@ class TeacherProfile extends Component {
                                     
                                     
                                     {/* <div className="tab-pane fade" id="v-pills-completed-projects" role="tabpanel" aria-labelledby="v-pills-completed-projects-tab"> */}
-                                    <h2><img className="dashboard_logo_image" src={Teachers} alt="" /> Teachers</h2>
+                                    <h2><img className="dashboard_logo_image" src={Teachers} alt="" /> Subjects</h2>
                                     <hr/>
-                                    <div>
-                                        {/* <Link className="btn btn-lg btn-outline-success" to="/#"><FaPlus/> Add a project</Link> */}
-                                    </div>
+                                    <div class="container">
+                                        <div class="row">
+                                            <div class="col-sm">
+                                                <Link className="btn btn-lg btn-outline-success" to="/register_new_subject"><FaPlus/> Register For New Subject</Link>
+
+                                            </div>
+                                            
+                                        </div><br/>
+                                    </div><hr/>
                                     <br/>
                                     <div>
-                                        <table className="table table-hover text-center">
-                                            <thead>
+                                    <table className="table">
+                                            <thead className="thead-dark">
                                                 <tr>
                                                 {/* <th scope="col">Teacher Name</th> */}
                                                 <th scope="col">Subject</th>
                                                 <th scope="col">Subject Code</th>
+                                                <th scope="col"></th>
+                                                <th scope="col"></th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -312,6 +422,9 @@ class TeacherProfile extends Component {
                                                                 <tr>
                                                                     <th scope="col">{teacher.subject_name}</th>
                                                                     <th scope="col">{teacher.subject_code}</th>
+                                                                    <th scope="col"><Link to={`/update_subject/edit/${teacher.subject_id}`} className="btn btn-warning">Edit</Link></th>
+                                                                    <th scope="col"><a  onClick={this.onDelete.bind(this,teacher.subject_id)}className="btn btn-danger">Delete</a></th>
+
                                                                     {/* <th scope="col">{teacher.gender}</th>
                                                                     <th scope="col">{teacher.gurdian_number}</th> */}
                                                                 </tr>
@@ -328,18 +441,16 @@ class TeacherProfile extends Component {
                                 </div>
 
                                 <div className="tab-pane fade" id="v-pills-completed-projects" role="tabpanel" aria-labelledby="v-pills-completed-projects-tab">
-                                    <h2><img className="dashboard_logo_image" src={Teachers} alt="" /> Subjects</h2>
-                                    <hr/>
-                                    <div className="d-flex justify-content-left">
-                                        <Link className="btn btn-lg btn-outline-success" to="/add_lecture_matireal"><FaPlus/> Add new Subject Module</Link>
-                                    </div><br/>
-                                    <div className="d-flex justify-content-left">
-                                        <Link className="btn btn-lg btn-outline-success" to="/register_new_subject"><FaPlus/> Register For New Subject</Link>
+                                    <h2><img className="dashboard_logo_image" src={Teachers} alt="" /> Modules</h2>
 
-                                    </div><br/>
-                                    <div className="d-flex justify-content-left">
-                                        <Link className="btn btn-lg btn-outline-success" to="/add_notice"><FaPlus/> Add Notice</Link>
-
+                                    <div class="container">
+                                        <div class="row">
+                                            <div class="col-sm">
+                                                <Link className="btn btn-lg btn-outline-success" to="/add_lecture_matireal"><FaPlus/> Add new Module</Link>
+                                                
+                                            </div>
+                                            
+                                        </div><br/>
                                     </div>
                                     
                                     <hr/>
@@ -386,9 +497,10 @@ class TeacherProfile extends Component {
                                                                             {/* <h6>File : <a>{module.module_upload_file}</a></h6> */}
                                                                             
                                                                         </div>
-                                                                        <a href="/#" className="btn btn-warning">View</a><br/>
+                                                                        <Link to={`/update_subject/edit/${module.module_id}`} className="btn btn-warning">Edit</Link>
                                                                         <a href="/#" className="btn btn-success">Download</a>
-                                                                        {/* <Link to={'/arc_prductdetails'} className="btn btn-success">View</Link> */}
+                                                                        <a onClick = {this.onDeleteMoudule.bind(this,module.module_id)}className="btn btn-danger">Delete</a>
+
                                                                         {/* <Link to={`/arc_prductdetails/ `} className="btn btn-success">View</Link> */}
                                                                     </div>
                                                                 </div>
@@ -405,6 +517,117 @@ class TeacherProfile extends Component {
                                     </div>
                                     
                                     </div>
+                                </div>
+
+                                <div className="tab-pane fade show" id="v-pills-completed-schedule" role="tabpanel" aria-labelledby="v-pills-dashboard-tab">
+                                    <h2><img className="dashboard_logo_image" src={Teachers} alt="" /> Class Room Schedule</h2>
+
+                                    <div class="container">
+                                        
+                                        <div class="row">
+                                            <div class="col-sm">
+                                                <Link className="btn btn-lg btn-outline-success" to="/add_class_schedul"><FaPlus/> Add Class Schedul</Link>
+                                                
+                                            </div>
+                                            
+                                        </div>
+                                        <hr/>
+                                    </div>
+                                    <div>
+                                    <table className="table">
+                                            <thead className="thead-dark">
+                                                <tr>
+                                                {/* <th scope="col">Teacher Name</th> */}
+                                                <th scope="col">Subject Code</th>
+                                                <th scope="col">Study Year</th>
+                                                <th scope="col">Class Room</th>
+                                                <th scope="col">Time</th>
+                                                <th scope="col">Status</th>
+                                                <th scope="col">Start Date</th>
+                                                <th scope="col">End Date</th>
+                                                <th scope="col"></th>
+                                                <th scope="col"></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            {
+                                                    this.state.schedul_details.map(shedule=>{
+                                                        return(
+                                                                <tr>
+                                                                    <th scope="col">{shedule.subject_code}</th>
+                                                                    <th scope="col">{shedule.study_year}</th>
+                                                                    <th scope="col">{shedule.class_room_id}</th>
+                                                                    <th scope="col">{shedule.time_id}</th>
+                                                                    <th scope="col">{shedule.status}</th>
+                                                                    <th scope="col">{shedule.start_date}</th>
+                                                                    <th scope="col">{shedule.end_date}</th>
+                                                                    <th scope="col"><Link to={`/update_subject/edit/${shedule.class_schedule_id}`} className="btn btn-warning">Edit</Link></th>
+                                                                    <th scope="col"><a  onClick={this.onDeleteSchedule.bind(this,shedule.class_schedule_id)}className="btn btn-danger">Delete</a></th>
+
+                                                                    {/* <th scope="col">{teacher.gender}</th>
+                                                                    <th scope="col">{teacher.gurdian_number}</th> */}
+                                                                </tr>
+                                                            )
+                                                    })
+                                                }    
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                    
+                                    
+                                </div>
+
+                                <div className="tab-pane fade show " id="v-pills-completed-Notices" role="tabpanel" aria-labelledby="v-pills-dashboard-tab">
+                                    <h2><img className="dashboard_logo_image" src={Teachers} alt="" /> Notices</h2>
+
+                                    <div class="container">
+                                        
+                                        <div class="row">
+                                            
+                                        <div class="col-sm">
+                                                <Link className="btn btn-lg btn-outline-success" to="/add_notice"><FaPlus/> Add Notice</Link>
+                                                
+                                            </div>
+                                            
+                                        </div>
+                                        <hr/>
+                                    </div>
+                                    <div>
+                                    <table className="table">
+                                            <thead className="thead-dark">
+                                                <tr>
+                                                {/* <th scope="col">Teacher Name</th> */}
+                                                <th scope="col">Subject Name</th>
+                                                <th scope="col">Notice Date</th>
+                                                <th scope="col">About Notice</th>
+                                                <th scope="col">Study Year</th>
+                                                <th scope="col"></th>
+                                                <th scope="col"></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            {
+                                                    this.state.notice_details.map(notice=>{
+                                                        return(
+                                                                <tr>
+                                                                    <th scope="col">{notice.subject_name}</th>
+                                                                    <th scope="col">{notice.notice_date}</th>
+                                                                    <th scope="col">{notice.about_notice}</th>
+                                                                    <th scope="col">{notice.study_year}</th>
+                                                                    <th scope="col"><Link to={`/update_subject/edit/${notice.notice_id}`} className="btn btn-warning">Edit</Link></th>
+                                                                    <th scope="col"><a  onClick={this.onDeleteNotice.bind(this,notice.notice_id)}className="btn btn-danger">Delete</a></th>
+
+                                                                </tr>
+                                                            )
+                                                    })
+                                                }    
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                    
+                                    
                                 </div>
 
 

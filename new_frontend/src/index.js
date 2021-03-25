@@ -9,6 +9,8 @@ import axios from "axios";
 import cookie from 'js-cookie';
 import jwt from 'jsonwebtoken';
 
+// import './fonts/Goldman/Goldman-Bold.ttf';
+
 const jwt_secret = 'lcHL0YSpiqjlmaFOg3LdTzW09AxITZqHt6EsALHdkUMa045RFd9jyBdNasxDSMy6';
 
 

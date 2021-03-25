@@ -39,11 +39,25 @@ class Teachers extends Controller
        
     }
 
+    
+
+    public function get_notice($id)
+    {
+        $notice = DB::table('notices')->where('user_id', $id)->get(); 
+        return $notice;
+       
+    }
+
     public function get_all_subject()
     {
         $teacher = Subject::all();
         return $teacher;
 
+    }
+
+    public function destroy($id)
+    {
+        DB::table('notices')->where('notice_id', $id)->delete();
     }
 
 

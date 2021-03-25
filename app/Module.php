@@ -11,7 +11,8 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
 class Module extends Model
 {
     protected $fillable = [
-        
+        'user_id', 
+        'subject_code', 
         'module_name',
         'module_no',
         'module_description',

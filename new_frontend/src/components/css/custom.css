@@ -675,6 +675,17 @@ input[type="radio"] {
     /* box-shadow: 0px 8px 20px rgba(0,0,0,19%); */
 }
 
+.font-link {
+    font-family: 'Hanalei Fill', cursive;
+  }
+
+  /* @font-face {
+    font-family: "GoldmanBold";
+    src: local("GoldmanBold"),
+     url("./fonts/Goldman/Goldman-Bold.ttf") format("truetype");
+    font-weight: bold;
+   } */
+
 .user_card-header {
     height: 40%;
     position: relative;

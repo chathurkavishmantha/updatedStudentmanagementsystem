@@ -12,11 +12,13 @@ import {connect} from 'react-redux';
         super(props);
         this.state = {
             // id:'',
+            id:props.id,
             module_name:'',
             module_no:'',
             module_description:'',
             module_upload_date:'',
-            module_upload_file:''
+            module_upload_file:'',
+            subject_code:''
 
         }
     }
@@ -26,9 +28,10 @@ import {connect} from 'react-redux';
         e.preventDefault();
         const data = {
             // id:this.state.id,
-
+            user_id:this.state.id,
             module_name:this.state.module_name,
             module_no:this.state.module_no,
+            subject_code:this.state.subject_code,
             module_description:this.state.module_description,
             module_upload_date:this.state.module_upload_date,
             module_upload_file:this.state.module_upload_file
@@ -69,6 +72,8 @@ import {connect} from 'react-redux';
                                     </h4>
                                     <div className="form-row d-flex justify-content-center">
                                         <div className="col-md-3 mb-3">
+                                            <input type="hidden" className="form-control" id="validationServer01" name="user_id" onChange={this.handleInput} value={this.state.id} required />
+
                                             <label htmlFor="validationServer01">Module Name :</label>
                                             {/* <input type="text" className="form-control" id="" name="id" onChange={this.handleInput}  required /> */}
                                             <input type="text" className="form-control" id="validationServer01" name="module_name" onChange={this.handleInput} required />
@@ -76,7 +81,11 @@ import {connect} from 'react-redux';
                                         <div className="col-md-3 mb-3">
                                             <label htmlFor="validationServer01">Module Number :</label>
                                             <input type="text" className="form-control" id="validationServer01" name="module_no" onChange={this.handleInput} required />
-                                        </div>                                       
+                                        </div>  
+                                        <div className="col-md-3 mb-3">
+                                            <label htmlFor="validationServer01">Subject Code :</label>
+                                            <input type="text" className="form-control" id="validationServer01" name="subject_code" onChange={this.handleInput} required />
+                                        </div>                                      
                                         
                                     </div>
                                     <div className="form-row d-flex justify-content-center">
@@ -87,7 +96,7 @@ import {connect} from 'react-redux';
                                         </div>
                                         <div className="col-md-3 mb-3">
                                             <label htmlFor="validationServer01">Upload date :</label>
-                                            <input type="text" className="form-control" id="validationServer01" name="module_upload_date" onChange={this.handleInput} required />
+                                            <input type="date" className="form-control" id="validationServer01" name="module_upload_date" onChange={this.handleInput} required />
                                         </div>                                       
                                         
                                     </div>
@@ -126,7 +135,7 @@ import {connect} from 'react-redux';
 
 const mapStateToProps = state => {
     return {
-        // id:state.auth.user.id,
+        id:state.auth.user.id,
         
     };
 }

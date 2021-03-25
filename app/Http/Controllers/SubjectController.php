@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Subject;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
+use Mockery\Matcher\Subset;
 
 class SubjectController extends Controller
 {
@@ -23,8 +24,25 @@ class SubjectController extends Controller
 
     public function getSubjectrDetails($id)
     {
-        $architects = DB::table('subjects')->where('user_id', $id)->get(); 
-        return $architects;
+        $details = DB::table('subjects')->where('user_id', $id)->get(); 
+        return $details;
+    }
+
+    public function getAllSubjectrDetails($id)
+    {
+        $details = DB::table('subjects')->where('user_id', $id)->get(); 
+        return $details;
+    }
+
+    public function findDataFromSubject($id)
+    {
+        $details = DB::table('subjects')->where('user_id', $id)->get(); 
+        return $details;
+    }
+
+    public function destroy($id)
+    {
+        DB::table('subjects')->where('subject_id', $id)->delete();
     }
 
     
