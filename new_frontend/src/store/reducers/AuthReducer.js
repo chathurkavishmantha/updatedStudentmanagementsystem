@@ -1,4 +1,4 @@
-
+// Auth Reducer
 
 const AuthReducer = (state = {}, actions) => {
     switch (actions.type) {

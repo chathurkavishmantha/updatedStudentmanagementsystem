@@ -11,4 +11,13 @@ class RegisterModuleStudents extends Model
         'subject_code', 
         'module_no'
     ];
+
+
+    //create relation ship with 2 tables and join it.
+    public function Module_function(){
+        return $this->hasOne(Module::class , 'module_no' , 'module_no');
+    }
+
 }
+
+

@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import {Link} from 'react-router-dom';
-
+import { connect } from 'react-redux';
 import axios from 'axios';
 import cookie from 'js-cookie';
 import Error from '../user/Error';
 import '../css/custom.css';
 import {FaUserCircle, FaLock, FaExclamationCircle} from 'react';
 import MainLogo from '../css/img/login.gif';
-import { connect } from 'react-redux';
+
 
 class Login extends Component {
 
@@ -26,9 +26,11 @@ class Login extends Component {
         console.log(data);
         axios.post("http://localhost:8000/api/auth/login", data)
         .then(res => {
+            
             cookie.set('token', res.data.access_token);
+            // cookie.set("user",res.data.user);
             this.props.setLogin(res.data.user);
-            this.props.history.push('/student_profile');
+            this.props.history.push('/teacher_profile');
             
         })
         // .catch(e => this.setState({errors: e.response.data.errors}))
@@ -119,5 +121,4 @@ const mapDispatchToProps = dispatch => {
     }
 }
 
-export default connect(null, mapDispatchToProps)(Login);
-// export default Login;
+export default connect(null, mapDispatchToProps)(Login)

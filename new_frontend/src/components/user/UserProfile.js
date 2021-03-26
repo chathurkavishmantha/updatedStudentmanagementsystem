@@ -458,7 +458,7 @@ class UserProfile extends Component {
                                     <h2><img className="dashboard_logo_image" src={Teachers} alt="" />Manage Module</h2>
                                     <hr/>
                                     <div>
-                                        <Link className="btn btn-lg btn-outline-success" to="/student_profile"><FaPlus/> Register for new module</Link>
+                                        <Link className="btn btn-lg btn-outline-success" to="/student_register_module"><FaPlus/> Register for new module</Link>
                                         {/* <button className="btn btn-lg btn-outline-success" onClick={this.registerModuleDetails}>Register for new module</button> */}
                                     </div>
                                     <br/>
@@ -532,7 +532,9 @@ class UserProfile extends Component {
 
 }
 const mapStateToProps = state => {
+    console.log(state);
     return {
+        
         id:state.auth.user.id,        
         name:state.auth.user.name,
         email:state.auth.user.email,
@@ -551,7 +553,7 @@ const mapStateToProps = state => {
 
         
 
-    };
-};
+    }
+}
 
 export default connect(mapStateToProps, null)(UserProfile);

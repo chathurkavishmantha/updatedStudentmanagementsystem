@@ -2,19 +2,23 @@ import React, { Component } from 'react';
 import {Link} from 'react-router-dom';
 import MaleDefaultImage from '../css/img/male_default.jpg';
 import axios from 'axios';
+import Error from '../user/Error';
 import cookie from 'js-cookie';
 import {connect} from 'react-redux';
 
 
- class RegisterNewModule extends Component {
+ class CreateExam extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            subject_code:'',
+            // subject_id:'',
             id:props.id,
-            module_no:'',
-            // Data:this.props.location.state.Data
+            name:props.name,
+            subject_name:'',
+            subject_code:''
+            
+            
 
         }
     }
@@ -24,18 +28,17 @@ import {connect} from 'react-redux';
         e.preventDefault();
         const data = {
             // id:this.state.id,
-            subject_code:this.state.subject_code,
             user_id:this.state.id,
-            module_no:this.state.module_no
+            user_name:this.state.name,
+            subject_name:this.state.subject_name,
+            subject_code:this.state.subject_code
         }
         console.log(data);
 
-        axios.post("http://localhost:8000/api/student_register_module", data)
+        axios.post("http://localhost:8000/api/register_subject", data)
         .then(res => {
-            // cookie.set('token', res.data.access_token);
-            // this.props.setLogin(res.data.user);
             console.log(res.data);
-            this.props.history.push('/student_profile');
+            this.props.history.push('/teacher_profile');
             
         })
         .catch(e => this.setState({errors: e.response.data.errors}))
@@ -57,27 +60,31 @@ import {connect} from 'react-redux';
         return (
             <main className="main-expand">
                 <div>
+                    {/* <h1>{this.state.id}</h1> */}
                     <div className="text-center">
                         <div className="text-center jumbotron jumbotron-fluid">
                         <form className="text-center" method="POST" onSubmit={this.handleForm}>
-                                    <h4><h1>Register For New Module </h1><br/>
+                                    <h4><h1>Create New Exam </h1><br/>
                                     </h4>
                                     <div className="form-row d-flex justify-content-center">
                                         <div className="col-md-3 mb-3">
-                                            <label htmlFor="validationServer01">Subject Code :</label>
-                                            <input type="text" className="form-control" id="validationServer01" name="subject_code" onChange={this.handleInput} required />
-                                        </div>                                       
-                                        
-                                        <div className="col-md-3 mb-3">
-                                            <input type="hidden" className="form-control" id="validationServer01" name="user_id" onChange={this.handleInput} value={this.state.id} required />
+                                            {/* <input type="text" className="form-control" id="" name="id" onChange={this.handleInput} required /> */}
+                                            <label htmlFor="validationServer01">Exam Name :</label>
+                                            <input type="text" className="form-control" id="validationServer01" name="subject_name" onChange={this.handleInput} required />                                        
                                             
-
-                                            <label htmlFor="validationServer01">Module No :</label>
-                                            {/* <input type="text" className="form-control" id="" name="id" onChange={this.handleInput}  required /> */}
-                                            <input type="text" className="form-control" id="validationServer01" name="module_no" onChange={this.handleInput} required />
-                                        </div>
+                                            <label htmlFor="validationServer01">Subject Name:</label>
+                                            <input type="text" className="form-control" id="validationServer01" name="subject_code" onChange={this.handleInput} required />
                                         
-                                    </div>                           
+                                        
+                                        </div>   
+                                            
+                                                {/* <input type="hidden" className="form-control" id="validationServer01" name="user_id" onChange={this.handleInput} value={this.state.id} required />
+                                                <input type="hidden" className="form-control" id="validationServer01" name="user_name" onChange={this.handleInput} value={this.state.name} required />
+                                                                                */}
+                                        
+                                    </div>
+                                    
+                                    
 
 
                                     <div className="d-flex justify-content-center">
@@ -105,9 +112,9 @@ import {connect} from 'react-redux';
 const mapStateToProps = state => {
     return {
         id:state.auth.user.id,
-        // subject_code:state.auth.subject.subject_code,
+        name:state.auth.user.name,
         
     };
 }
 
-export default connect(mapStateToProps, null)(RegisterNewModule);
+export default connect(mapStateToProps, null)(CreateExam);

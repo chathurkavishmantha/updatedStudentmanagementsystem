@@ -55,15 +55,22 @@ class ModuleController extends Controller
     {
         
         // return $module;
+        
+        //DB::enableQueryLog();
+        //$value_1 = DB::table('register_module_students')->where('user_id', $id)->value('module_no');
+        //$value_2 = DB::table('register_module_students')->where('user_id', $id)->value('subject_code');
+        // $record = Module::where('module_no' , $value_1 )->where('subject_code' , $value_2)->get();
+        //$record = Module::all()->where('module_no' , $value_1 )->where('subject_code' , $value_2);
+        // $record = Module::where('module_no' , $value_1 )->where('subject_code' , $value_2)->value('user_id');
 
-        DB::enableQueryLog();
-        $value_1 = DB::table('register_module_students')->where('user_id', $id)->value('module_no');
-        $value_2 = DB::table('register_module_students')->where('user_id', $id)->value('subject_code');
-        $record = Module::where('module_no' , $value_1 )->where('subject_code' , $value_2)->get();
+        // $data =  DB::table('modules')->where('user_id', $record)->get();
+        // return $data;
             // ->first();
 
+        
+         $record = \App\RegisterModuleStudents::with(['Module_function'])->where('user_id' , $id) ->get();
 
-     // dd($record->toArray());
+     // dd($record->toArray())
 
         return $record;
     }

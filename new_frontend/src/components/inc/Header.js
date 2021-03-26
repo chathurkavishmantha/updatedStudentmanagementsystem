@@ -24,6 +24,11 @@ import AddNotices from '../teacher/AddNotices';
 import AddClassSchedul from '../teacher/AddClassSchedul';
 import UpdateLectureMatireal from '../pages/UpdateLectureMatireal';
 import RegisterNewModule from '../pages/RegisterNewModule';
+import ProcessExam from '../exam/ProcessExam';
+import CreateExam from '../exam/CreateExam';
+import CreateQuestions from '../exam/CreateQuestions';
+import CreateOptions from '../exam/CreateOptions';
+import CreateResult from '../exam/CreateResult';
 
 
 
@@ -114,6 +119,13 @@ function Header(props) {
 
 
                                 <AuthRoute exact path="/test" component={Test}/>
+
+                                {/* Exam routes */}
+                                <AuthRoute exact path="/exam_test" component={ProcessExam}/>
+                                <AuthRoute exact path="/exam_create" component={CreateExam}/>
+                                <AuthRoute exact path="/exam_create_question" component={CreateQuestions}/>
+                                <AuthRoute exact path="/exam_create_option_answers" component={CreateOptions}/>
+                                <AuthRoute exact path="/exam_create_results" component={CreateResult}/>
 
 
 
