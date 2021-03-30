@@ -12,12 +12,10 @@ import {connect} from 'react-redux';
     constructor(props) {
         super(props);
         this.state = {
-            // subject_id:'',
-            id:props.id,
-            name:props.name,
-            subject_name:'',
-            subject_code:''
-            
+
+            // id:props.id,
+            category_id:'',
+            question_description:'',      
             
 
         }
@@ -27,21 +25,21 @@ import {connect} from 'react-redux';
     handleForm = (e) => {
         e.preventDefault();
         const data = {
-            // id:this.state.id,
-            user_id:this.state.id,
-            user_name:this.state.name,
-            subject_name:this.state.subject_name,
-            subject_code:this.state.subject_code
+
+            // user_id:this.state.id,
+            category_id:this.state.category_id,
+            question_description:this.state.question_description
+
         }
         console.log(data);
 
-        axios.post("http://localhost:8000/api/register_subject", data)
+        axios.post("http://localhost:8000/api/add_questions", data)
         .then(res => {
             console.log(res.data);
             this.props.history.push('/teacher_profile');
             
         })
-        .catch(e => this.setState({errors: e.response.data.errors}))
+        
 
        
         
@@ -57,6 +55,7 @@ import {connect} from 'react-redux';
 
 
     render() {
+        // const {get_exam_data} = this.state;
         return (
             <main className="main-expand">
                 <div>
@@ -64,24 +63,19 @@ import {connect} from 'react-redux';
                     <div className="text-center">
                         <div className="text-center jumbotron jumbotron-fluid">
                         <form className="text-center" method="POST" onSubmit={this.handleForm}>
-                                    <h4><h1>Create Questions </h1><br/>
+                                    <h4><h1>Create New Question </h1><br/>
+                                    
                                     </h4>
                                     <div className="form-row d-flex justify-content-center">
-                                        <div className=" col-md-6 mb-3 search_filter_inputs">
-                                            <select className="custom-select" name="subject_name" id=""   required>
-                                                <option defaultValue>Subject....</option>
-                                                <option value="network">Network</option>
-                                                <option value="database">Database</option>
-                                                <option value="datastructure">DataStructure</option>
-                                                <option value="programing">Programing</option>
-                                                <option value="cybersecurity">Cyber Security</option>
-                                            </select>
-                                        {/* </div>
-                                        <div className="col-md-6 mb-3 search_filter_inputs"> */}
-                                            {/* <input type="text" className="form-control" id="" name="id" onChange={this.handleInput} required /> */}
-                                            <label htmlFor="validationServer01">Enter Question:</label>
-                                            <textarea type="textarea" className="form-control" id="validationServer01" name="subject_name" onChange={this.handleInput} required />                                        
-                                            
+                                        <div className="col-md-3 mb-3">
+                                                                                                          
+                                                        <label htmlFor="validationServer01">Category ID :</label>
+                                                        <input type="number" className="form-control" id="validationServer01" name="category_id" onChange={this.handleInput} placeholder="Please enter your category question ID" required />                                        
+                                                        
+                                                        <label htmlFor="validationServer01">New Question:</label>
+                                                        <textarea type="text" className="form-control" id="validationServer01" name="question_description" onChange={this.handleInput} placeholder="Enter Your Questiom Here.." required />
+                                        
+                                                   
                                         </div>   
                                             
                                                 {/* <input type="hidden" className="form-control" id="validationServer01" name="user_id" onChange={this.handleInput} value={this.state.id} required />
@@ -104,11 +98,6 @@ import {connect} from 'react-redux';
                 </div>
                 <br/>
                 <br/>
-                <div className="row col-12">
-                    <div className="text-right left_btn col-4">
-                    </div>
-                    <div className="col-4"></div>
-                </div>
             </main>
             
         )

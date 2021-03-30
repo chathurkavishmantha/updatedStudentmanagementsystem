@@ -7,7 +7,7 @@ import cookie from 'js-cookie';
 import {connect} from 'react-redux';
 
 
- class AddNotices extends Component {
+ class ProcessExam extends Component {
 
     constructor(props) {
         super(props);
@@ -17,7 +17,8 @@ import {connect} from 'react-redux';
             subject_name:'',
             notice_date:'',
             study_year:'',
-            about_notice:''
+            about_notice:'',
+            exam_data:[]
             
 
         }
@@ -48,6 +49,17 @@ import {connect} from 'react-redux';
         
     };
 
+
+    componentDidMount(){
+        //get data
+       axios.get('http://127.0.0.1:8000/api/get_option_data/')
+       .then(response=>{
+           this.setState({
+               exam_data:response.data
+           });
+       });
+    }
+
     handleInput = (e) => {
         e.preventDefault();
         const name = e.target.name;
@@ -58,6 +70,7 @@ import {connect} from 'react-redux';
 
 
     render() {
+        const {exam_data} = this.state;
         return (
             <main className="main-expand">
                 <div>
@@ -66,14 +79,20 @@ import {connect} from 'react-redux';
                         <div class="col-md-8">
                             <div class="card">
                                 <div class="card-header">
-                                    <input type="text" className="form-control" id="validationServer01" name="exam_name" onChange={this.handleInput} required />
                                 </div>
+                                {
+                                   exam_data.map(exam =>{
+                                     return(
+                                <div class="card-body" key={exam.user_id}>
 
-                                <div class="card-body">
                                         <div class="row">
                                             <div class="col-12">
                                                 <div class="alert alert-success" role="alert">
-                                                    sfs
+                                                
+                                                            <div className="user_card-content">
+                                                            <p>Categories Name:{exam.category_name} </p>
+                                                            </div>
+                                                        
                                                 </div>
                                             </div>
                                         </div>
@@ -81,23 +100,19 @@ import {connect} from 'react-redux';
                                     <form method="POST" action="">
                                             <div class="card mb-3">
                                                 <div class="card-header">
-                                                    sfaf
+                                                <p>Question:{exam.question_description} </p>
                                                 </div>
                                 
                                                 <div class="card-body">
-                                                   
-                                                        <div class="card mb-3 ">
+                                                
+                                                        <div class="card mb-3 " key={exam.user_id}>
                                                             <div class="card-header"></div>
                                         
                                                             <div class="card-body">
                                                                 <input type="hidden" name="" value=""/>
                                                                 
                                                                     <div class="form-check">
-                                                                    <p>Please select your gender:</p>
-                                                                    <input type="radio" value="Male" name="gender" /> Male
-                                                                    <input type="radio" value="Female" name="gender" /> Female
-                                                                    <input type="radio" value="Other" name="gender" /> Other
-                                                                           
+                                                                        <p>*{exam.option_txt}</p>                                                                          
                                                                         
                                                                     </div>
                                                    
@@ -106,15 +121,22 @@ import {connect} from 'react-redux';
                                                 </div>
                                             </div>
 
-                                        <div class="form-group row mb-0">
+                                            
+
+                                        
+                                    </form>
+                                    <div class="form-group row mb-0">
                                             <div class="col-md-6">
                                                 <button type="submit" class="btn btn-primary">
                                                     Submit
                                                 </button>
                                             </div>
                                         </div>
-                                    </form>
                                 </div>
+                               )
+                                                        
+                            })
+                        }
                             </div>
                         </div>
                     </div>
@@ -133,4 +155,4 @@ const mapStateToProps = state => {
     };
 }
 
-export default connect(mapStateToProps, null)(AddNotices);
+export default connect(mapStateToProps, null)(ProcessExam);

@@ -29,6 +29,7 @@ import CreateExam from '../exam/CreateExam';
 import CreateQuestions from '../exam/CreateQuestions';
 import CreateOptions from '../exam/CreateOptions';
 import CreateResult from '../exam/CreateResult';
+import CreateExamCategory from '../exam/CreateExamCategory';
 
 
 
@@ -122,10 +123,11 @@ function Header(props) {
 
                                 {/* Exam routes */}
                                 <AuthRoute exact path="/exam_test" component={ProcessExam}/>
-                                <AuthRoute exact path="/exam_create" component={CreateExam}/>
-                                <AuthRoute exact path="/exam_create_question" component={CreateQuestions}/>
-                                <AuthRoute exact path="/exam_create_option_answers" component={CreateOptions}/>
-                                <AuthRoute exact path="/exam_create_results" component={CreateResult}/>
+                                <AuthRoute exact path="/add_exam" component={CreateExam}/>
+                                <AuthRoute exact path="/add_categories" component={CreateExamCategory}/>
+                                <AuthRoute exact path="/add_question" component={CreateQuestions}/>
+                                <AuthRoute exact path="/add_option" component={CreateOptions}/>
+                                <AuthRoute exact path="/add_answers" component={CreateResult}/>
 
 
 

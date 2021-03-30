@@ -237,6 +237,9 @@ class TeacherProfile extends Component {
                                     <li className="nav-item butn_styles">
                                         <a className="nav-link text-white" id="v-pills-completed-Notices-tab" data-toggle="pill" href="#v-pills-completed-Notices" role="tab" aria-controls="v-pills-Notices" aria-selected="true">Manage Notices</a>
                                     </li>
+                                    <li className="nav-item butn_styles">
+                                        <a className="nav-link text-white" id="v-pills-completed-exams-tab" data-toggle="pill" href="#v-pills-completed-exams" role="tab" aria-controls="v-pills-exams" aria-selected="true">Manage Exams</a>
+                                    </li>
                                 </ul>
                             </div>
                         </nav>
@@ -588,6 +591,69 @@ class TeacherProfile extends Component {
                                         <div class="col-sm">
                                                 <Link className="btn btn-lg btn-outline-success" to="/add_notice"><FaPlus/> Add Notice</Link>
                                                 
+                                            </div>
+                                            
+                                        </div>
+                                        <hr/>
+                                    </div>
+                                    <div>
+                                    <table className="table">
+                                            <thead className="thead-dark">
+                                                <tr>
+                                                {/* <th scope="col">Teacher Name</th> */}
+                                                <th scope="col">Subject Name</th>
+                                                <th scope="col">Notice Date</th>
+                                                <th scope="col">About Notice</th>
+                                                <th scope="col">Study Year</th>
+                                                <th scope="col"></th>
+                                                <th scope="col"></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            {
+                                                    this.state.notice_details.map(notice=>{
+                                                        return(
+                                                                <tr>
+                                                                    <th scope="col">{notice.subject_name}</th>
+                                                                    <th scope="col">{notice.notice_date}</th>
+                                                                    <th scope="col">{notice.about_notice}</th>
+                                                                    <th scope="col">{notice.study_year}</th>
+                                                                    <th scope="col"><Link to={`/update_subject/edit/${notice.notice_id}`} className="btn btn-warning">Edit</Link></th>
+                                                                    <th scope="col"><a  onClick={this.onDeleteNotice.bind(this,notice.notice_id)}className="btn btn-danger">Delete</a></th>
+
+                                                                </tr>
+                                                            )
+                                                    })
+                                                }    
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                    
+                                    
+                                </div>
+
+                                <div className="tab-pane fade show " id="v-pills-completed-exams" role="tabpanel" aria-labelledby="v-pills-dashboard-tab">
+                                    <h2><img className="dashboard_logo_image" src={Teachers} alt="" /> Manage Exams</h2>
+
+                                    <div class="container">
+                                        
+                                        <div class="row"> 
+                                            
+                                            <div class="col-sm">
+                                                <Link className="btn btn-lg btn-outline-success" to="/add_exam"><FaPlus/> Add Exams</Link>                                                
+                                            </div>
+                                            <div class="col-sm">
+                                                <Link className="btn btn-lg btn-outline-success" to="/add_categories"><FaPlus/> Add Category</Link>                                                
+                                            </div>
+                                            <div class="col-sm">
+                                                <Link className="btn btn-lg btn-outline-success" to="/add_question"><FaPlus/> Add Questions</Link>                                                
+                                            </div>
+                                            <div class="col-sm">
+                                                <Link className="btn btn-lg btn-outline-success" to="/add_option"><FaPlus/> Add Options</Link>                                                
+                                            </div>
+                                            <div class="col-sm">
+                                                <Link className="btn btn-lg btn-outline-success" to="/add_answers"><FaPlus/> Add Answers</Link>                                                
                                             </div>
                                             
                                         </div>

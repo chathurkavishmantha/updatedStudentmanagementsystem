@@ -16,6 +16,7 @@ class Notice extends Model
 }
 
 
+
 // $value_1 = DB::table('register_module_students')->where('user_id', $id)->value('module_no');
 //         $value_2 = DB::table('register_module_students')->where('user_id', $id)->value('subject_code');
 //         // $data    = DB::table('modules')->where('user_id', $value_2)->get();

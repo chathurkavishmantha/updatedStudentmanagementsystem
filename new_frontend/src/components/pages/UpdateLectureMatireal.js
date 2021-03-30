@@ -115,61 +115,6 @@ import ErrorWorksDoneAlert from '../teacher/ErrorWorksAlert';
 
 
 
-
-
-
-    // handleForm = (e) => {
-    //     e.preventDefault();
-    //     const data = {
-    //         // id:this.state.id,
-    //         // subject_id:this.state.Subject[0].subject_id,
-    //         // subject_name:this.state.Subject[1].subject_name,
-
-    //         module_name:this.state.module_name,
-    //         module_no:this.state.module_no,
-    //         module_description:this.state.module_description,
-    //         module_upload_date:this.state.module_upload_date,
-    //         module_upload_file:this.state.module_upload_file
-    //     }
-    //     console.log(data);
-
-    //     axios.post("http://localhost:8000/api/update_subject" )
-    //     .then(res => {
-    //         // cookie.set('token', res.data.access_token);
-    //         // this.props.setLogin(res.data.user);
-    //         console.log(res.data);
-    //         this.props.history.push('/teacher_profile');
-            
-    //     })
-    //     .catch(e => this.setState({errors: e.response.data.errors}))
-
-    //     axios.get("http://localhost:8000/api/subject_details", this.props.id )
-    //     .then(res => {
-    //         // cookie.set('token', res.data.access_token);
-    //         // this.props.setLogin(res.data.user);
-    //         console.log(res.data);
-    //         this.props.history.push('/teacher_profile');
-            
-    //     })
-    //     .catch(e => this.setState({errors: e.response.data.errors}))
-
-        
-        
-    
-
-       
-        
-    // };
-  
-    // handleInput = (e) => {
-    //     e.preventDefault();
-    //     const name = e.target.name;
-    //     const value = e.target.value;
-    //     this.setState({[name]:value})
-    // }
-
-
-
     render() {
         return (
             <main className="main-expand">

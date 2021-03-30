@@ -35,7 +35,6 @@ class CreateModuleTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('module');
-        Schema::drop('tableName');
+        Schema::dropIfExists('modules');
     }
 }

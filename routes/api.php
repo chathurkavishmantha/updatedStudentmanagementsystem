@@ -59,6 +59,30 @@ Route::delete('/delete_shedule/{id}', 'ClassRoomSchedule@destroy');
 
 Route::post('/student_register_module', 'RegisterModuleStudent@student_register_module');
 
+//exam controller 
+
+Route::post('/add_exams', 'ExamsController@add_exams');
+Route::get('/get_exams_all_data/{id}', 'ExamsController@get_exams');
+// Route::get('/get_exam_all_data', 'ExamsController@get_exams_all_data');
+
+//category controller
+
+Route::post('/add_categories', 'ExamCategories@add_categories');
+
+
+
+//Question controller
+
+Route::post('/add_questions', 'ExamQuestion@add_questions');
+Route::get('/get_question_data/{id}', 'ExamQuestion@get_all_questions');
+
+
+//Option controller
+
+Route::post('/add_option', 'ExamOption@add_option');
+Route::get('/get_result', 'ExamOption@get_result');
+// Route::get('/get_option_data/{id}', 'ExamOption@get_exam_data');
+Route::get('/get_option_data', 'ExamOption@get_exam_option_data');
 
 
 

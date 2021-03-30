@@ -35,7 +35,7 @@ import {connect} from 'react-redux';
         }
         console.log(data);
 
-        axios.post("http://localhost:8000/api/register_subject", data)
+        axios.getpost("http://localhost:8000/api/get_result"+ this.props.id)
         .then(res => {
             console.log(res.data);
             this.props.history.push('/teacher_profile');
